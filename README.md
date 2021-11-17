@@ -4,21 +4,62 @@
 
 ## Overview
 
-**Open bootloader** is an IAP that is provided in the STM32Cube Firmware package and GitHub. This is an example that can be used by any customer that wants to build its own bootloader. Its main task is to download the application program to the internal user memory (Flash/SRAM/OTP) without the need for a debugger, by using one of the available communication interface (USART/I2C/SPI/USB-DFU & FDCAN).
-**Open bootloader** supplies services to the Host (STM32 CubeProgrammer…) in order to download firmware to the device via an interface link (USART/I2C/SPI/USB-DFU & FDCAN) and to install this firmware in the needed user memory.
-**Open bootloader** relies on STM32CubeFirmware HAL/LL drivers for hardware system initialization like the different clocks and the interfaces configuration.
-**Open bootloader** is executed by Cortex-M processor on the non-secure domain and uses following resources:
-   * Non secure user flash memory/SRAM1
+**OpenBootloader** is an In-Application programming (IAP) provided in the STM32Cube MCU Packages and GitHub. It is fully compatible with STM32 System Bootloader so that they have the same supported interfaces and supported commands and they are working exactly with the same Tools such as STM32CubeProgrammer.
+**OpenBootloader** is provided as an example that can be used by any customer who wants to build and customize his own Bootloader starting from a good basis. It allows to download the application program to the internal user memory (Flash, SRAM, OTP) without the need for a debugger, by using one of the available communication interfaces (USART, I2C, SPI, USB-DFU or FDCAN).
+**OpenBootloader** supplies services to the Host (can be STM32CubeProgrammer or another user made host) in order to download firmware to the device via an interface link and to install this firmware in the needed user memory.
+**OpenBootloader** relies on STM32Cube HAL/LL drivers for hardware system initialization such as the clocks and the communication interfaces configuration.
+**OpenBootloader** code can be loaded in user Flash memory or in SRAM user memory with taking necessary precautions to avoid erasing or corrupting it by error (for example use write protection mechanism).
+**OpenBootloader** is executed by Cortex-M processor on the non-secure domain, from the Flash or SRAM initial base address, and uses the following resources:
+   * Non secure internal flash memory/SRAM1
    * Interrupts
-   * RCC and power
-   * IP Peripherals (USART/I2C/SPI/USB-DFU & FDCAN)
+   * Clocks and power
+   * Communication interfaces
    * GPIOs
    * Systick
    * IWDG
 
+## Documentation
+
+Since OpenBootloader supports exactly same protocol interfaces as STM32 System Bootloader, following list of documents provide details of how to use each protocol:
+- [AN3155](https://www.st.com/resource/en/application_note/CD00264342.pdf): USART protocol used in the STM32 Bootloader
+- [AN5405](https://www.st.com/resource/en/application_note/dm00660346.pdf): FDCAN protocol used in the STM32 Bootloader
+- [AN4221](https://www.st.com/resource/en/application_note/DM00072315.pdf): I2C protocol used in the STM32 Bootloader
+- [AN3156](https://www.st.com/resource/en/application_note/cd00264379.pdf): USB DFU protocol used in the STM32 Bootloader
+- [AN4286](https://www.st.com/resource/en/application_note/DM00081379.pdf): SPI protocol used in the STM32 Bootloader
+
+
+**OpenBootloader** can be customized by changing its location (ie. load it in last user Flash sector or other sectors), its supported protocols, its supported interfaces, and its supported operations.
+**OpenBootloader** applications can be found in STM32Cube MCU Packages under the directory `/Projects/<STM32xxBoardyy>/Applications/OpenBootloader/`, where `<STM32xxBoardyy>` is the reference of the used board **e.g.**, `B-U585I-IOT02A`.
+
+A useful introductory video series, in six parts, explaining how to use OpenBootloader step by step, can be found here: 
+- [part1](https://www.youtube.com/watch?v=_gejWsAn5kg): Introduction
+- [part2](https://www.youtube.com/watch?v=kYr7UMieRTo): Using a NUCLEO-G474RE
+- [part3](https://www.youtube.com/watch?v=JUBac27tOis): Loading an application
+- [part4](https://www.youtube.com/watch?v=7sMDBSlZ7bU): Adding support for the I2C interface
+- [part5](https://www.youtube.com/watch?v=rr1W5h94qLU): STLINK-V3SET I2C setup
+- [part6](https://www.youtube.com/watch?v=IZ6BpDIm6O0): Loading an application over I2C
+
+## List of Supported Commands
+
+All STM32 System Bootloader commands are supported by OpenBootloader, which includes:
+ - Get Version
+ - Get Device ID
+ - Get Available Command List
+ - Write Memory
+ - Read Memory
+ - Write Protection setting
+ - Read Protection setting
+ - Jump to Application
+ - Flash Erase
+ - Special Command
+
+## How to use
+
+**Open Bootloader** examples showing how to use this library are available in dedicated repositories, the list of which can be found [here](https://github.com/STMicroelectronics/STM32Cube_MCU_Overall_Offer/blob/master/README.md#stm32cube-middleware-libraries).
+
 ## Description
 
-This **stm32-mw-openbl** MCU component repository is one element **common to all** STM32Cube MCU embedded software packages, providing the **Open Bootloader MCU Middleware** part.
+This **stm32-mw-openbl** MCU component repository is one element **common to all** STM32Cube MCU packages, providing the **OpenBootloader MCU Middleware** part.
 
 ## Release note
 
@@ -26,4 +67,6 @@ Details about the content of this release are available in the release note [her
 
 ## Troubleshooting
 
-Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) guide.
+Caution : The issues are strictly limited to submit problems or suggestions related to the software delivered in this repository.
+
+**For any other question**  related to the product, the hardware performance or characteristics, the tools, the environment, you can submit it to the  **ST Community**  on the STM32 MCUs related  [page](https://community.st.com/s/topic/0TO0X000000BSqSWAW/stm32-mcus).
