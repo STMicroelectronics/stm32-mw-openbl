@@ -20,6 +20,10 @@
 #ifndef IWDG_INTERFACE_H
 #define IWDG_INTERFACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -27,5 +31,9 @@
 /* Exported functions ------------------------------------------------------- */
 void OPENBL_IWDG_Configuration(void);
 void OPENBL_IWDG_Refresh(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* IWDG_INTERFACE_H */

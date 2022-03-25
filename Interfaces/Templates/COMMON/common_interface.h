@@ -20,6 +20,10 @@
 #ifndef COMMON_INTERFACE_H
 #define COMMON_INTERFACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 typedef void (*Function_Pointer)(void);
@@ -33,5 +37,9 @@ void Common_DisableIrq(void);
 FlagStatus Common_GetProtectionStatus(void);
 void Common_SetPostProcessingCallback(Function_Pointer Callback);
 void Common_StartPostProcessing(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* COMMON_INTERFACE_H */

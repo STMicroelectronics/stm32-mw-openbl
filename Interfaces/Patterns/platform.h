@@ -20,6 +20,10 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g0xx_hal.h"
 
@@ -28,5 +32,8 @@
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 
-#endif /* PLATFORM_H */
+#ifdef __cplusplus
+}
+#endif
 
+#endif /* PLATFORM_H */

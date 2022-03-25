@@ -20,9 +20,15 @@
 #ifndef I2C_INTERFACE_H
 #define I2C_INTERFACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
 #include "common_interface.h"
+#include "openbl_core.h"
+
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
@@ -40,14 +46,18 @@ void OPENBL_I2C_SpecialCommandProcess(OPENBL_SpecialCmdTypeDef *Frame);
 void OPENBL_Enable_BusyState_Sending(void);
 void OPENBL_Disable_BusyState_Sending(void);
 
-#if defined (__CC_ARM)
-void OPENBL_I2C_WaitNack(void);
-void OPENBL_I2C_WaitStop(void);
-void OPENBL_I2C_SendBusyByte(void);
-#else
+#if defined (__ICCARM__)
 __ramfunc void OPENBL_I2C_WaitNack(void);
 __ramfunc void OPENBL_I2C_WaitStop(void);
 __ramfunc void OPENBL_I2C_SendBusyByte(void);
-#endif /* (__CC_ARM) */
+#else
+__attribute__((section(".ramfunc"))) void OPENBL_I2C_WaitNack(void);
+__attribute__((section(".ramfunc"))) void OPENBL_I2C_WaitStop(void);
+__attribute__((section(".ramfunc"))) void OPENBL_I2C_SendBusyByte(void);
+#endif /* (__ICCARM__) */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* I2C_INTERFACE_H */

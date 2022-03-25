@@ -17,27 +17,30 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32g0xx.h"
-#include "stm32g0xx_ll_i2c.h"
+#include "platform.h"
+#include "interfaces_conf.h"
 #include "openbl_core.h"
 #include "openbl_i2c_cmd.h"
 #include "i2c_interface.h"
 #include "iwdg_interface.h"
-#include "interfaces_conf.h"
 #include "flash_interface.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-/* Exported variables --------------------------------------------------------*/
 static uint8_t I2cDetected = 0;
 
+/* Exported variables --------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 static void OPENBL_I2C_Init(void);
 
 /* Private functions ---------------------------------------------------------*/
 
+/**
+ * @brief  This function is used to initialize the used I2C instance.
+ * @retval None.
+ */
 static void OPENBL_I2C_Init(void)
 {
   LL_I2C_InitTypeDef I2C_InitStruct;
@@ -66,10 +69,10 @@ void OPENBL_I2C_Configuration(void)
 
   /* Enable all resources clocks --------------------------------------------*/
   /* Enable used GPIOx clocks */
-  __HAL_RCC_GPIOB_CLK_ENABLE();
+  I2Cx_GPIO_CLK_ENABLE();
 
   /* Enable I2C clock */
-  __HAL_RCC_I2C1_CLK_ENABLE();
+  I2Cx_CLK_ENABLE();
 
   GPIO_InitStruct.Pin       = I2Cx_SCL_PIN;
   GPIO_InitStruct.Mode      = GPIO_MODE_AF_OD;
@@ -130,7 +133,12 @@ uint8_t OPENBL_I2C_GetCommandOpcode(void)
 {
   uint8_t command_opc = 0x0U;
 
-  OPENBL_I2C_WaitAddress();
+  while (LL_I2C_IsActiveFlag_ADDR(I2Cx) == 0)
+  {
+    OPENBL_IWDG_Refresh();
+  }
+
+  LL_I2C_ClearFlag_ADDR(I2Cx);
 
   /* Get the command opcode */
   command_opc = OPENBL_I2C_ReadByte();
@@ -220,11 +228,11 @@ void OPENBL_I2C_WaitAddress(void)
   * @brief  This function is used to wait until NACK is detected.
   * @retval None.
   */
-#if defined (__CC_ARM)
-void OPENBL_I2C_WaitNack(void)
-#else
+#if defined (__ICCARM__)
 __ramfunc void OPENBL_I2C_WaitNack(void)
-#endif /* (__CC_ARM) */
+#else
+__attribute__((section(".ramfunc"))) void OPENBL_I2C_WaitNack(void)
+#endif /* (__ICCARM__) */
 {
   uint32_t timeout = 0U;
 
@@ -238,7 +246,8 @@ __ramfunc void OPENBL_I2C_WaitNack(void)
     if ((timeout++) >= OPENBL_I2C_TIMEOUT)
     {
       /* System Reset */
-      SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
+      SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos)    |
+                     (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
                      SCB_AIRCR_SYSRESETREQ_Msk);
     }
   }
@@ -251,11 +260,11 @@ __ramfunc void OPENBL_I2C_WaitNack(void)
   * @brief  This function is used to wait until STOP is detected.
   * @retval None.
   */
-#if defined (__CC_ARM)
-void OPENBL_I2C_WaitStop(void)
-#else
+#if defined (__ICCARM__)
 __ramfunc void OPENBL_I2C_WaitStop(void)
-#endif /* (__CC_ARM) */
+#else
+__attribute__((section(".ramfunc"))) void OPENBL_I2C_WaitStop(void)
+#endif /* (__ICCARM__) */
 {
   uint32_t timeout = 0U;
 
@@ -269,7 +278,8 @@ __ramfunc void OPENBL_I2C_WaitStop(void)
     if ((timeout++) >= OPENBL_I2C_TIMEOUT)
     {
       /* System Reset */
-      SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
+      SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos)    |
+                     (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
                      SCB_AIRCR_SYSRESETREQ_Msk);
     }
   }
@@ -302,11 +312,11 @@ void OPENBL_I2C_SendAcknowledgeByte(uint8_t Byte)
   * @param
   * @retval None.
   */
-#if defined (__CC_ARM)
-void OPENBL_I2C_SendBusyByte(void)
-#else
+#if defined (__ICCARM__)
 __ramfunc void OPENBL_I2C_SendBusyByte(void)
-#endif /* (__CC_ARM) */
+#else
+__attribute__((section(".ramfunc"))) void OPENBL_I2C_SendBusyByte(void)
+#endif /* (__ICCARM__) */
 {
   uint32_t timeout = 0;
 
@@ -325,7 +335,8 @@ __ramfunc void OPENBL_I2C_SendBusyByte(void)
       if ((timeout++) >= OPENBL_I2C_TIMEOUT)
       {
         /* System Reset */
-        SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
+        SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos)    |
+                       (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
                        SCB_AIRCR_SYSRESETREQ_Msk);
       }
     }
@@ -336,7 +347,7 @@ __ramfunc void OPENBL_I2C_SendBusyByte(void)
     /* Wait until NACK is detected */
     OPENBL_I2C_WaitNack();
 
-    /* Wait until STOP byte is detected*/
+    /* Wait until STOP byte is detected */
     OPENBL_I2C_WaitStop();
   }
 }

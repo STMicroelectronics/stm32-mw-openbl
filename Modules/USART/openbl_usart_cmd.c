@@ -636,7 +636,7 @@ uint8_t OPENBL_USART_GetAddress(uint32_t *Address)
 }
 
 /**
- * @brief  This function is used to execute special comand commands.
+ * @brief  This function is used to execute special command commands.
  * @retval None.
  */
 void OPENBL_USART_SpecialCommand(void)

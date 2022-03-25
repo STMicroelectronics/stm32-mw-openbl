@@ -33,7 +33,7 @@ OPENBL_MemoryTypeDef EB_Descriptor =
 {
   EB_START_ADDRESS,
   EB_END_ADDRESS,
-  (64),
+  EB_SIZE,
   EB_AREA,
   OPENBL_EB_Read,
   NULL,

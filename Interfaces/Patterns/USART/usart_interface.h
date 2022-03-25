@@ -20,8 +20,13 @@
 #ifndef USART_INTERFACE_H
 #define USART_INTERFACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
+#include "openbl_core.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -34,6 +39,10 @@ uint8_t OPENBL_USART_ProtocolDetection(void);
 uint8_t OPENBL_USART_GetCommandOpcode(void);
 uint8_t OPENBL_USART_ReadByte(void);
 void OPENBL_USART_SendByte(uint8_t Byte);
-void OPENBL_USART_SpecialCommandProcess(OPENBL_SpecialCmdTypeDef *Frame);
+void OPENBL_USART_SpecialCommandProcess(OPENBL_SpecialCmdTypeDef *SpecialCmd);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* USART_INTERFACE_H */

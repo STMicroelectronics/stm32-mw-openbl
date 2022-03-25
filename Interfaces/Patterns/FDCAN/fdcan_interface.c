@@ -18,20 +18,20 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
+#include "interfaces_conf.h"
 #include "openbl_core.h"
 #include "openbl_fdcan_cmd.h"
 #include "fdcan_interface.h"
 #include "iwdg_interface.h"
-#include "interfaces_conf.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-FDCAN_HandleTypeDef hfdcan;
-FDCAN_FilterTypeDef sFilterConfig;
-FDCAN_TxHeaderTypeDef TxHeader;
-FDCAN_RxHeaderTypeDef RxHeader;
+static FDCAN_HandleTypeDef hfdcan;
+static FDCAN_FilterTypeDef sFilterConfig;
+static FDCAN_TxHeaderTypeDef TxHeader;
+static FDCAN_RxHeaderTypeDef RxHeader;
 static uint8_t FdcanDetected = 0U;
 
 /* Exported variables --------------------------------------------------------*/
@@ -42,7 +42,10 @@ uint8_t RxData[FDCAN_RAM_BUFFER_SIZE];
 static void OPENBL_FDCAN_Init(void);
 
 /* Private functions ---------------------------------------------------------*/
-
+/**
+ * @brief  This function is used to initialize the used FDCAN instance.
+ * @retval None.
+ */
 static void OPENBL_FDCAN_Init(void)
 {
   /*                Bit time configuration:
@@ -116,9 +119,7 @@ void OPENBL_FDCAN_Configuration(void)
 {
   /* Enable all resources clocks --------------------------------------------*/
   /* Enable used GPIOx clocks */
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  /* Enable FDCAN clock */
-  __HAL_RCC_FDCAN_CLK_ENABLE();
+  FDCANx_GPIO_CLK_ENABLE();
 
   OPENBL_FDCAN_Init();
 }
@@ -143,7 +144,7 @@ void OPENBL_FDCAN_DeInit(void)
 
 /**
  * @brief  This function is used to detect if there is any activity on FDCAN protocol.
- * @retval None.
+ * @retval Returns 1 if interface is detected else 0..
  */
 uint8_t OPENBL_FDCAN_ProtocolDetection(void)
 {
@@ -196,7 +197,7 @@ uint8_t OPENBL_FDCAN_GetCommandOpcode(void)
   */
 uint8_t OPENBL_FDCAN_ReadByte(void)
 {
-  uint8_t byte = 0x0;
+  uint8_t byte;
 
   /* check if FIFO 0 receive at least one message */
   while (HAL_FDCAN_GetRxFifoFillLevel(&hfdcan, FDCAN_RX_FIFO0) < 1)
@@ -212,7 +213,7 @@ uint8_t OPENBL_FDCAN_ReadByte(void)
 
 /**
   * @brief  This function is used to read bytes from FDCAN pipe.
-  * @retval Returns the read byte.
+  * @retval None.
   */
 void OPENBL_FDCAN_ReadBytes(uint8_t *Buffer, uint32_t BufferSize)
 {

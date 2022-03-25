@@ -20,6 +20,10 @@
 #ifndef OTP_INTERFACE_H
 #define OTP_INTERFACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -27,5 +31,9 @@
 /* Exported functions ------------------------------------------------------- */
 uint8_t OPENBL_OTP_Read(uint32_t Address);
 void OPENBL_OTP_Write(uint32_t Address, uint8_t *Data, uint32_t DataLength);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* OPTIONBYTES_INTERFACE_H */

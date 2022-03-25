@@ -20,11 +20,19 @@
 #ifndef SYSTEMMEMORY_INTERFACE_H
 #define SYSTEMMEMORY_INTERFACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 uint8_t OPENBL_ICP_Read(uint32_t Address);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SYSTEMMEMORY_INTERFACE_H */

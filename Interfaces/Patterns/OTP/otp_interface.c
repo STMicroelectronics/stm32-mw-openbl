@@ -35,7 +35,7 @@ OPENBL_MemoryTypeDef OTP_Descriptor =
 {
   OTP_START_ADDRESS,
   OTP_END_ADDRESS,
-  (1024),
+  OTP_BL_SIZE,
   OTP_AREA,
   OPENBL_OTP_Read,
   OPENBL_OTP_Write,

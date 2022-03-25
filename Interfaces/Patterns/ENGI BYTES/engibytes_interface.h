@@ -20,11 +20,19 @@
 #ifndef ENGIBYTES_INTERFACE_H
 #define ENGIBYTES_INTERFACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 uint8_t OPENBL_EB_Read(uint32_t Address);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ENGIBYTES_INTERFACE_H */

@@ -33,7 +33,7 @@ OPENBL_MemoryTypeDef OB_Descriptor =
 {
   OB_START_ADDRESS,
   OB_END_ADDRESS,
-  (128),
+  OB_SIZE,
   OB_AREA,
   OPENBL_OB_Read,
   OPENBL_OB_Write,
@@ -43,7 +43,6 @@ OPENBL_MemoryTypeDef OB_Descriptor =
   NULL,
   NULL
 };
-
 
 /* Exported functions --------------------------------------------------------*/
 

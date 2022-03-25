@@ -18,11 +18,11 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
+#include "interfaces_conf.h"
 #include "openbl_core.h"
 #include "openbl_usart_cmd.h"
 #include "usart_interface.h"
 #include "iwdg_interface.h"
-#include "interfaces_conf.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -36,6 +36,10 @@ static void OPENBL_USART_Init(void);
 
 /* Private functions ---------------------------------------------------------*/
 
+/**
+ * @brief  This function is used to initialize the used USART instance.
+ * @retval None.
+ */
 static void OPENBL_USART_Init(void)
 {
 }
@@ -60,12 +64,11 @@ void OPENBL_USART_DeInit(void)
 
 /**
  * @brief  This function is used to detect if there is any activity on USART protocol.
- * @retval None.
+ * @retval Returns 1 if interface is detected else 0.
  */
 uint8_t OPENBL_USART_ProtocolDetection(void)
 {
-  uint8_t detected;
-  return detected;
+  return UsartDetected;
 }
 
 /**
@@ -75,6 +78,7 @@ uint8_t OPENBL_USART_ProtocolDetection(void)
 uint8_t OPENBL_USART_GetCommandOpcode(void)
 {
   uint8_t command_opc = 0x0;
+
   return command_opc;
 }
 

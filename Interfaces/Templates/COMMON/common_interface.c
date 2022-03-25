@@ -18,6 +18,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
+#include "flash_interface.h"
+#include "openbootloader_conf.h"
 #include "common_interface.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,19 +63,23 @@ void Common_DisableIrq(void)
   */
 FlagStatus Common_GetProtectionStatus(void)
 {
+  FlagStatus status;
+
+  return status;
 }
 
 /**
   * @brief  Register a callback function to be called at the end of commands processing.
-  * @retval None
+  * @retval None.
   */
 void Common_SetPostProcessingCallback(Function_Pointer Callback)
 {
+  ResetCallback = Callback;
 }
 
 /**
   * @brief  Start post processing task.
-  * @retval None
+  * @retval None.
   */
 void Common_StartPostProcessing()
 {

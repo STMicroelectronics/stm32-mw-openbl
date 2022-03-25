@@ -66,5 +66,4 @@ OPENBL_MemoryTypeDef ICP2_Descriptor =
   */
 uint8_t OPENBL_ICP_Read(uint32_t Address)
 {
-  return (*(uint8_t *)(Address));
 }

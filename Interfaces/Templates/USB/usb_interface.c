@@ -17,16 +17,11 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
+#include "platform.h"
 #include "usb_interface.h"
-#include "usbd_core.h"
-#include "stm32g0xx.h"
-#include "stm32g0xx_hal.h"
-#include "usbd_def.h"
-#include "usbd_dfu.h"
-#include "usbd_ioreq.h"
-#include "usbd_dfu_if.h"
-#include "usbd_desc.h"
-#include "usb_device.h"
+#include "app_usbx_device.h"
+#include "app_azure_rtos.h"
+#include "openbl_core.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -35,8 +30,11 @@
 static uint8_t UsbDetected = 0U;
 
 /* Exported variables --------------------------------------------------------*/
-uint8_t UsbSofDetected = 0;
+uint8_t UsbSofDetected = 0U;
 
+PCD_HandleTypeDef hpcd_USB_OTG_FS;
+
+/* External variables --------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
 
@@ -58,50 +56,21 @@ void OPENBL_USB_DeInit(void)
 
 /**
  * @brief  This function is used to detect if there is any activity on USB protocol.
- * @retval None.
+ * @retval Returns 1 if interface is detected else 0.
  */
 uint8_t OPENBL_USB_ProtocolDetection(void)
 {
-  uint8_t detected;
-  return detected;
+  return UsbDetected;
 }
 
 /**
-  * @brief  This function is used to send a nack when the address is not valid by changing
-  * the state of the usb to dfu_error.
-  * @retval Returns USBD_FAIL.
-  */
-uint16_t OPENBL_USB_SendAddressNack(USBD_HandleTypeDef *pDev)
-{
-  return (uint16_t)USBD_FAIL;
-}
-
-/**
-  * @brief  This function is used to send a nack when the RDP level of download command is egale
-  * to 1 by changing the state of the usb to dfu_error.
-  * @retval Returns USBD_FAIL.
-  */
-uint16_t OPENBL_USB_DnloadRdpNack(USBD_HandleTypeDef *pDev)
-{
-  return (uint16_t)USBD_FAIL;
-}
-
-/**
-  * @brief  This function is used to send a nack when the RDP level of upload command is egale
-  * to 1 by changing the state of the usb to dfu_error.
-  * @retval Returns USBD_FAIL.
-  */
-void OPENBL_USB_UploadRdpNack(USBD_HandleTypeDef *pDev)
-{
-}
-
-/**
-  * @brief  Gets the sector of a given address
-  * @param  None
-  * @retval The sector of a given address
+  * @brief  Gets the page of a given address.
+  * @param  Address Address of the FLASH Memory.
+  * @retval The page of a given address.
   */
 uint32_t OPENBL_USB_GetPage(uint32_t Address)
 {
-  uint32_t page = 0U;
+  uint32_t page;
+
   return page;
 }

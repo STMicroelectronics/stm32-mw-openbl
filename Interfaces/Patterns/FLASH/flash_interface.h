@@ -20,12 +20,18 @@
 #ifndef FLASH_INTERFACE_H
 #define FLASH_INTERFACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "common_interface.h"
+
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 #define FLASH_BUSY_STATE_ENABLED       ((uint32_t)0xAAAA0000)
 #define FLASH_BUSY_STATE_DISABLED      ((uint32_t)0x0000DDDD)
+#define PROGRAM_TIMEOUT                ((uint32_t)0x00FFFFFF)
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
@@ -42,5 +48,9 @@ ErrorStatus OPENBL_FLASH_SetWriteProtection(FunctionalState State, uint8_t *List
 uint32_t OPENBL_FLASH_GetReadOutProtectionLevel(void);
 void OPENBL_Enable_BusyState_Flag(void);
 void OPENBL_Disable_BusyState_Flag(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLASH_INTERFACE_H */

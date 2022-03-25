@@ -21,6 +21,7 @@
 #include "openbl_mem.h"
 #include "app_openbootloader.h"
 #include "common_interface.h"
+#include "openbl_core.h"
 #include "ram_interface.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -33,7 +34,7 @@ OPENBL_MemoryTypeDef RAM_Descriptor =
 {
   RAM_START_ADDRESS + OPENBL_RAM_SIZE, /* OPENBL_RAM_SIZE is added to the RAM start address to protect OpenBootloader RAM area */
   RAM_END_ADDRESS,
-  (128 * 1024),
+  RAM_SIZE,
   RAM_AREA,
   OPENBL_RAM_Read,
   OPENBL_RAM_Write,
@@ -59,11 +60,11 @@ uint8_t OPENBL_RAM_Read(uint32_t Address)
 /**
   * @brief  This function is used to write data in RAM memory.
   * @param  Address The address where that data will be written.
-  * @param  Data The data to be written.
+  * @param  pData The data to be written.
   * @param  DataLength The length of the data to be written.
   * @retval None.
   */
-void OPENBL_RAM_Write(uint32_t Address, uint8_t *Data, uint32_t DataLength)
+void OPENBL_RAM_Write(uint32_t Address, uint8_t *pData, uint32_t DataLength)
 {
 }
 

@@ -20,6 +20,10 @@
 #ifndef RAM_INTERFACE_H
 #define RAM_INTERFACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -28,5 +32,9 @@
 void OPENBL_RAM_JumpToAddress(uint32_t Address);
 uint8_t OPENBL_RAM_Read(uint32_t Address);
 void OPENBL_RAM_Write(uint32_t Address, uint8_t *Data, uint32_t DataLength);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RAM_INTERFACE_H */

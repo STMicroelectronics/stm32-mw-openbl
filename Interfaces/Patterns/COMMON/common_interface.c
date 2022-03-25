@@ -82,7 +82,7 @@ FlagStatus Common_GetProtectionStatus(void)
 
 /**
   * @brief  Register a callback function to be called at the end of commands processing.
-  * @retval None
+  * @retval None.
   */
 void Common_SetPostProcessingCallback(Function_Pointer Callback)
 {
@@ -91,7 +91,7 @@ void Common_SetPostProcessingCallback(Function_Pointer Callback)
 
 /**
   * @brief  Start post processing task.
-  * @retval None
+  * @retval None.
   */
 void Common_StartPostProcessing()
 {

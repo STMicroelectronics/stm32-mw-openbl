@@ -24,17 +24,19 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbd_dfu.h"
 #include "openbl_core.h"
 
 uint16_t OPENBL_USB_EraseMemory(uint32_t Add);
 void OPENBL_USB_WriteMemory(uint8_t *pSrc, uint8_t *pDest, uint32_t Length);
 uint8_t *OPENBL_USB_ReadMemory(uint8_t *pSrc, uint8_t *pDest, uint32_t Length);
-
-/* Exported variables --------------------------------------------------------*/
-extern USBD_HandleTypeDef hUsbDeviceFS;
+void OPENBL_USB_Jump(uint32_t Address);
+void OPENBL_USB_WriteProtect(uint8_t *pBuffer, uint32_t Length);
+void OPENBL_USB_WriteUnprotect(void);
+void OPENBL_USB_ReadProtect(void);
+void OPENBL_USB_ReadUnprotect(void);
 
 #ifdef __cplusplus
 }
 #endif
+
 #endif /* OPENBL_USB_CMD_H */
