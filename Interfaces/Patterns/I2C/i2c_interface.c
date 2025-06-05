@@ -326,4 +326,5 @@ __ramfunc void OPENBL_I2C_SendBusyByte(void)
   /* Wait until STOP byte is detected*/
   OPENBL_I2C_WaitStop();
 }
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

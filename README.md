@@ -1,6 +1,6 @@
 # Open Bootloader Middleware MCU Component
 
-![tag](https://img.shields.io/badge/tag-v3.0.0-brightgreen.svg)
+![tag](https://img.shields.io/badge/tag-v3.0.1-brightgreen.svg)
 
 ## Overview
 

@@ -141,4 +141,5 @@ __ramfunc void OPENBL_I2C_SendBusyByte(void)
 #endif /* (__CC_ARM) */
 {
 }
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
