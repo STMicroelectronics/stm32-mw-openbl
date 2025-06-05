@@ -335,7 +335,7 @@ void OPENBL_I3C_SendBytes(uint8_t *pBuffer, uint32_t BufferSize)
     /* Send one Byte of data */
     LL_I3C_TransmitData8(I3Cx, pBuffer[count]);
 
-    /* Reset timemout value */
+    /* Reset timeout value */
     timeout = OPENBL_I3C_TIMEOUT;
   }
 

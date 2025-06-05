@@ -28,7 +28,7 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 #define OPENBL_FDCAN_VERSION             0x10U      /* Open Bootloader FDCAN protocol V1.0 */
-#define FDCAN_RAM_BUFFER_SIZE             1156      /* Size of FDCAN buffer used to store received data from the host */
+#define FDCAN_RAM_BUFFER_SIZE            1164U      /* Size of FDCAN buffer used to store received data from the host */
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
