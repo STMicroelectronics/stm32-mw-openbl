@@ -21,7 +21,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif /* __cplusplus */
 
 /* Includes ------------------------------------------------------------------*/
 #include "openbl_core.h"
@@ -37,6 +37,6 @@ void OPENBL_USB_ReadUnprotect(void);
 
 #ifdef __cplusplus
 }
-#endif
+#endif /* __cplusplus */
 
 #endif /* OPENBL_USB_CMD_H */

@@ -20,11 +20,15 @@
 #ifndef OPENBL_FDCAN_CMD_H
 #define OPENBL_FDCAN_CMD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-#define OPENBL_FDCAN_VERSION             0x10U                /* Open Bootloader FDCAN protocol V1.0 */
-#define FDCAN_RAM_BUFFER_SIZE             1156                /* Size of FDCAN buffer used to store received data from the host */
+#define OPENBL_FDCAN_VERSION             0x10U      /* Open Bootloader FDCAN protocol V1.0 */
+#define FDCAN_RAM_BUFFER_SIZE             1156      /* Size of FDCAN buffer used to store received data from the host */
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
@@ -47,5 +51,9 @@ void OPENBL_FDCAN_WriteProtect(void);
 void OPENBL_FDCAN_WriteUnprotect(void);
 void OPENBL_FDCAN_SpecialCommand(void);
 void OPENBL_FDCAN_ExtendedSpecialCommand(void);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* OPENBL_FDCAN_CMD_H */

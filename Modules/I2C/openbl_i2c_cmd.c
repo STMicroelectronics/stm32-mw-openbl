@@ -37,7 +37,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* Buffer used to store received data from the host */
 static uint8_t I2C_RAM_Buf[I2C_RAM_BUFFER_SIZE];
-static uint8_t a_OPENBL_I2C_CommandsList[OPENBL_I2C_COMMANDS_NB_MAX] = {0};
+static uint8_t a_OPENBL_I2C_CommandsList[OPENBL_I2C_COMMANDS_NB_MAX] = {0U};
 static uint8_t I2cCommandsNumber = 0U;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -165,7 +165,7 @@ void OPENBL_I2C_GetID(void)
   /* Wait for address to match */
   OPENBL_I2C_WaitAddress();
 
-  OPENBL_I2C_SendByte(0x01);
+  OPENBL_I2C_SendByte(0x01U);
 
   /* Send the device ID starting by the MSB byte then the LSB byte */
   OPENBL_I2C_SendByte(DEVICE_ID_MSB);
@@ -182,9 +182,9 @@ void OPENBL_I2C_GetID(void)
 }
 
 /**
- * @brief  This function is used to read memory from the device.
- * @retval None.
- */
+  * @brief  This function is used to read memory from the device.
+  * @retval None.
+  */
 void OPENBL_I2C_ReadMemory(void)
 {
   uint32_t address;
@@ -251,9 +251,9 @@ void OPENBL_I2C_ReadMemory(void)
 }
 
 /**
- * @brief  This function is used to write in to device memory.
- * @retval None.
- */
+  * @brief  This function is used to write in to device memory.
+  * @retval None.
+  */
 void OPENBL_I2C_WriteMemory(void)
 {
   uint32_t address;
@@ -370,9 +370,9 @@ void OPENBL_I2C_Go(void)
 }
 
 /**
- * @brief  This function is used to enable readout protection.
- * @retval None.
- */
+  * @brief  This function is used to enable readout protection.
+  * @retval None.
+  */
 void OPENBL_I2C_ReadoutProtect(void)
 {
   /* Check memory protection then send adequate response */
@@ -395,12 +395,12 @@ void OPENBL_I2C_ReadoutProtect(void)
 }
 
 /**
- * @brief  This function is used to disable readout protection.
- * @note   Going from RDP level 1 to RDP level 0 erase all the flash,
- *         so the send of second acknowledge after Disabling the read protection
- *         is not possible what make the communication with the host get lost
- * @retval None.
- */
+  * @brief  This function is used to disable readout protection.
+  * @note   Going from RDP level 1 to RDP level 0 erase all the flash,
+  *         so the send of second acknowledge after Disabling the read protection
+  *         is not possible what make the communication with the host get lost
+  * @retval None.
+  */
 void OPENBL_I2C_ReadoutUnprotect(void)
 {
   OPENBL_I2C_SendAcknowledgeByte(ACK_BYTE);
@@ -415,9 +415,9 @@ void OPENBL_I2C_ReadoutUnprotect(void)
 }
 
 /**
- * @brief  This function is used to erase a memory.
- * @retval None.
- */
+  * @brief  This function is used to erase a memory.
+  * @retval None.
+  */
 void OPENBL_I2C_EraseMemory(void)
 {
   uint32_t xor;
@@ -567,9 +567,9 @@ void OPENBL_I2C_EraseMemory(void)
 }
 
 /**
- * @brief  This function is used to enable write protect.
- * @retval None.
- */
+  * @brief  This function is used to enable write protect.
+  * @retval None.
+  */
 void OPENBL_I2C_WriteProtect(void)
 {
   uint16_t counter;
@@ -651,9 +651,9 @@ void OPENBL_I2C_WriteProtect(void)
 }
 
 /**
- * @brief  This function is used to disable write protect.
- * @retval None.
- */
+  * @brief  This function is used to disable write protect.
+  * @retval None.
+  */
 void OPENBL_I2C_WriteUnprotect(void)
 {
   ErrorStatus error_value;
@@ -668,7 +668,7 @@ void OPENBL_I2C_WriteUnprotect(void)
     OPENBL_I2C_SendAcknowledgeByte(ACK_BYTE);
 
     /* Disable write protection */
-    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0);
+    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0U);
 
     OPENBL_I2C_SendAcknowledgeByte(ACK_BYTE);
 
@@ -681,11 +681,11 @@ void OPENBL_I2C_WriteUnprotect(void)
 }
 
 /**
- * @brief  This function is used to write in to device memory in non stretch mode.
- * @note   In this mode, when the write memory operation is executed the device
- *         send busy bytes to the host
- * @retval None.
- */
+  * @brief  This function is used to write in to device memory in non stretch mode.
+  * @note   In this mode, when the write memory operation is executed the device
+  *         send busy bytes to the host
+  * @retval None.
+  */
 void OPENBL_I2C_NonStretchWriteMemory(void)
 {
   uint32_t address;
@@ -765,11 +765,11 @@ void OPENBL_I2C_NonStretchWriteMemory(void)
 }
 
 /**
- * @brief  This function is used to erase a memory in non stretch mode.
- * @note   In this mode, when the erase memory operation is executed the device
- *         send busy bytes to the host
- * @retval None.
- */
+  * @brief  This function is used to erase a memory in non stretch mode.
+  * @note   In this mode, when the erase memory operation is executed the device
+  *         send busy bytes to the host
+  * @retval None.
+  */
 void OPENBL_I2C_NonStretchEraseMemory(void)
 {
   uint32_t xor;
@@ -926,11 +926,11 @@ void OPENBL_I2C_NonStretchEraseMemory(void)
 }
 
 /**
- * @brief  This function is used to enable write protect in non stretch mode.
- * @note   In this mode, when enabling the write protection the device
- *         send busy bytes to the host
- * @retval None.
- */
+  * @brief  This function is used to enable write protect in non stretch mode.
+  * @note   In this mode, when enabling the write protection the device
+  *         send busy bytes to the host
+  * @retval None.
+  */
 void OPENBL_I2C_NonStretchWriteProtect(void)
 {
   uint16_t counter;
@@ -1020,11 +1020,11 @@ void OPENBL_I2C_NonStretchWriteProtect(void)
 }
 
 /**
- * @brief  This function is used to disable write protect in non stretch mode.
- * @note   In this mode, when disabling the write protection the device
- *         send busy bytes to the host
- * @retval None.
- */
+  * @brief  This function is used to disable write protect in non stretch mode.
+  * @note   In this mode, when disabling the write protection the device
+  *         send busy bytes to the host
+  * @retval None.
+  */
 void OPENBL_I2C_NonStretchWriteUnprotect(void)
 {
   ErrorStatus error_value;
@@ -1042,7 +1042,7 @@ void OPENBL_I2C_NonStretchWriteUnprotect(void)
     OPENBL_Enable_BusyState_Sending();
 
     /* Disable write protection */
-    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0);
+    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0U);
 
     /* Disable Busy Byte */
     OPENBL_Disable_BusyState_Sending();
@@ -1058,11 +1058,11 @@ void OPENBL_I2C_NonStretchWriteUnprotect(void)
 }
 
 /**
- * @brief  This function is used to enable readout protection in non stretch mode.
- * @note   In this mode, when enabling the readout protection the device
- *         send busy bytes to the host
- * @retval None.
- */
+  * @brief  This function is used to enable readout protection in non stretch mode.
+  * @note   In this mode, when enabling the readout protection the device
+  *         send busy bytes to the host
+  * @retval None.
+  */
 void OPENBL_I2C_NonStretchReadoutProtect(void)
 {
   /* Check memory protection then send adequate response */
@@ -1091,14 +1091,14 @@ void OPENBL_I2C_NonStretchReadoutProtect(void)
 }
 
 /**
- * @brief  This function is used to disable readout protection in non stretch mode.
- * @note   In this mode, when disabling the readout protection the device
- *         send busy bytes to the host.
- *         going from RDP level 1 to RDP level 0 erase all the flash,
- *         so the send of second acknowledge after Disabling the read protection
- *         is not possible what make the communication with the host get lost
- * @retval None.
- */
+  * @brief  This function is used to disable readout protection in non stretch mode.
+  * @note   In this mode, when disabling the readout protection the device
+  *         send busy bytes to the host.
+  *         going from RDP level 1 to RDP level 0 erase all the flash,
+  *         so the send of second acknowledge after Disabling the read protection
+  *         is not possible what make the communication with the host get lost
+  * @retval None.
+  */
 void OPENBL_I2C_NonStretchReadoutUnprotect(void)
 {
   OPENBL_I2C_SendAcknowledgeByte(ACK_BYTE);
@@ -1119,12 +1119,12 @@ void OPENBL_I2C_NonStretchReadoutUnprotect(void)
 }
 
 /**
- * @brief  This function is used to get a valid address.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to get a valid address.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 uint8_t OPENBL_I2C_GetAddress(uint32_t *pAddress)
 {
-  uint8_t data[4] = {0, 0, 0, 0};
+  uint8_t data[4] = {0U, 0U, 0U, 0U};
   uint8_t status;
   uint8_t xor;
 
@@ -1165,9 +1165,9 @@ uint8_t OPENBL_I2C_GetAddress(uint32_t *pAddress)
 }
 
 /**
- * @brief  This function is used to execute special command commands.
- * @retval None.
- */
+  * @brief  This function is used to execute special command commands.
+  * @retval None.
+  */
 void OPENBL_I2C_SpecialCommand(void)
 {
   OPENBL_SpecialCmdTypeDef *special_cmd;
@@ -1249,6 +1249,11 @@ void OPENBL_I2C_SpecialCommand(void)
         /* Process the special command */
         OPENBL_I2C_SpecialCommandProcess(special_cmd);
 
+        /* NOTE: In case of any operation inside "SpecialCommandProcess" function that prevents the code
+         * from returning to here (reset operation...), to be compatible with the OpenBL protocol,
+         * the user must ensure sending the last ACK in the application side.
+         */
+
         /* Send acknowledgment */
         OPENBL_I2C_SendAcknowledgeByte(ACK_BYTE);
 
@@ -1263,9 +1268,9 @@ void OPENBL_I2C_SpecialCommand(void)
 }
 
 /**
- * @brief  This function is used to execute extended special command commands.
- * @retval None.
- */
+  * @brief  This function is used to execute extended special command commands.
+  * @retval None.
+  */
 void OPENBL_I2C_ExtendedSpecialCommand(void)
 {
   OPENBL_SpecialCmdTypeDef *special_cmd;
@@ -1389,6 +1394,11 @@ void OPENBL_I2C_ExtendedSpecialCommand(void)
             /* Process the special command */
             OPENBL_I2C_SpecialCommandProcess(special_cmd);
 
+            /* NOTE: In case of any operation inside "SpecialCommandProcess" function that prevents the code
+             * from returning to here (reset operation...), to be compatible with the OpenBL protocol,
+             * the user must ensure sending the last ACK in the application side.
+             */
+
             /* Send acknowledgment */
             OPENBL_I2C_SendAcknowledgeByte(ACK_BYTE);
 
@@ -1412,7 +1422,7 @@ void OPENBL_I2C_ExtendedSpecialCommand(void)
   */
 static uint8_t OPENBL_I2C_ConstructCommandsTable(OPENBL_CommandsTypeDef *pI2cCmd)
 {
-  uint8_t i = 0;
+  uint8_t i = 0U;
 
   if (pI2cCmd->GetCommand != NULL)
   {
@@ -1532,11 +1542,11 @@ static uint8_t OPENBL_I2C_ConstructCommandsTable(OPENBL_CommandsTypeDef *pI2cCmd
 }
 
 /**
- * @brief  This function is used to get the operation code.
- * @param  OpCode Pointer to the operation code to be returned.
- * @param  CmdType Type of the command, Special write or extended special command.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to get the operation code.
+  * @param  OpCode Pointer to the operation code to be returned.
+  * @param  CmdType Type of the command, Special write or extended special command.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 uint8_t OPENBL_I2C_GetSpecialCmdOpCode(uint16_t *OpCode, OPENBL_SpecialCmdTypeTypeDef CmdType)
 {
   uint8_t op_code[2];

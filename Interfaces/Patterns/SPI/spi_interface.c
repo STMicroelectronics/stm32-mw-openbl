@@ -32,7 +32,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static volatile uint8_t SpiRxNotEmpty = 0U;
+static __IO uint8_t SpiRxNotEmpty = 0U;
 static uint8_t SpiDetected = 0U;
 
 /* Exported variables --------------------------------------------------------*/
@@ -47,9 +47,9 @@ __attribute__((section(".ramfunc"))) void OPENBL_SPI_ClearFlag_OVR(void);
 /* Private functions ---------------------------------------------------------*/
 
 /**
- * @brief  This function is used to initialize the SPI peripheral
- * @retval None.
- */
+  * @brief  This function is used to initialize the SPI peripheral
+  * @retval None.
+  */
 static void OPENBL_SPI_Init(void)
 {
   LL_SPI_InitTypeDef SPI_InitStruct = {0};
@@ -81,9 +81,9 @@ static void OPENBL_SPI_Init(void)
 /* Exported functions --------------------------------------------------------*/
 
 /**
- * @brief  This function is used to configure SPI pins and then initialize the used SPI instance.
- * @retval None.
- */
+  * @brief  This function is used to configure SPI pins and then initialize the used SPI instance.
+  * @retval None.
+  */
 void OPENBL_SPI_Configuration(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -134,9 +134,9 @@ void OPENBL_SPI_Configuration(void)
 }
 
 /**
- * @brief  This function is used to De-initialize the SPI pins and instance.
- * @retval None.
- */
+  * @brief  This function is used to De-initialize the SPI pins and instance.
+  * @retval None.
+  */
 void OPENBL_SPI_DeInit(void)
 {
   /* Only de-initialize the SPI if it is not the current detected interface */
@@ -149,9 +149,9 @@ void OPENBL_SPI_DeInit(void)
 }
 
 /**
- * @brief  This function is used to detect if there is any activity on SPI protocol.
- * @retval None.
- */
+  * @brief  This function is used to detect if there is any activity on SPI protocol.
+  * @retval None.
+  */
 uint8_t OPENBL_SPI_ProtocolDetection(void)
 {
   /* Check if there is any activity on SPI */
@@ -185,9 +185,9 @@ uint8_t OPENBL_SPI_ProtocolDetection(void)
 }
 
 /**
- * @brief  This function is used to get the command opcode from the host.
- * @retval Returns the command.
- */
+  * @brief  This function is used to get the command opcode from the host.
+  * @retval Returns the command.
+  */
 uint8_t OPENBL_SPI_GetCommandOpcode(void)
 {
   uint8_t command_opc;
@@ -376,11 +376,11 @@ __attribute__((section(".ramfunc"))) void OPENBL_SPI_ClearFlag_OVR(void)
 }
 
 /**
- * @brief  This function is used to process and execute the special commands.
- *         The user must define the special commands routine here.
- * @param  SpecialCmd Pointer to the OPENBL_SpecialCmdTypeDef structure.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to process and execute the special commands.
+  *         The user must define the special commands routine here.
+  * @param  SpecialCmd Pointer to the OPENBL_SpecialCmdTypeDef structure.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 void OPENBL_SPI_SpecialCommandProcess(OPENBL_SpecialCmdTypeDef *SpecialCmd)
 {
   switch (SpecialCmd->OpCode)

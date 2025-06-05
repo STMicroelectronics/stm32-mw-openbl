@@ -172,7 +172,7 @@ void OPENBL_USB_WriteUnprotect(void)
 {
   ErrorStatus error_value;
 
-  error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0);
+  error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0U);
 
   if (error_value == SUCCESS)
   {

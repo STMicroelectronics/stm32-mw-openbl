@@ -38,9 +38,9 @@ static void OPENBL_I2C_Init(void);
 /* Private functions ---------------------------------------------------------*/
 
 /**
- * @brief  This function is used to initialize the used I2C instance.
- * @retval None.
- */
+  * @brief  This function is used to initialize the used I2C instance.
+  * @retval None.
+  */
 static void OPENBL_I2C_Init(void)
 {
 }
@@ -48,34 +48,34 @@ static void OPENBL_I2C_Init(void)
 /* Exported functions --------------------------------------------------------*/
 
 /**
- * @brief  This function is used to configure I2C pins and then initialize the used I2C instance.
- * @retval None.
- */
+  * @brief  This function is used to configure I2C pins and then initialize the used I2C instance.
+  * @retval None.
+  */
 void OPENBL_I2C_Configuration(void)
 {
 }
 
 /**
- * @brief  This function is used to De-initialize the I2C pins and instance.
- * @retval None.
- */
+  * @brief  This function is used to De-initialize the I2C pins and instance.
+  * @retval None.
+  */
 void OPENBL_I2C_DeInit(void)
 {
 }
 
 /**
- * @brief  This function is used to detect if there is any activity on I2C protocol.
- * @retval None.
- */
+  * @brief  This function is used to detect if there is any activity on I2C protocol.
+  * @retval None.
+  */
 uint8_t OPENBL_I2C_ProtocolDetection(void)
 {
   return I2cDetected;
 }
 
 /**
- * @brief  This function is used to get the command opcode from the host.
- * @retval Returns the command.
- */
+  * @brief  This function is used to get the command opcode from the host.
+  * @retval Returns the command.
+  */
 uint8_t OPENBL_I2C_GetCommandOpcode(void)
 {
   uint8_t command_opc = 0x0U;
@@ -157,28 +157,28 @@ __attribute__((section(".ramfunc"))) void OPENBL_I2C_SendBusyByte(void)
 }
 
 /**
- * @brief  This function is used to process and execute the special commands.
- *         The user must define the special commands routine here.
- * @param  SpecialCmd Pointer to the OPENBL_SpecialCmdTypeDef structure.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to process and execute the special commands.
+  *         The user must define the special commands routine here.
+  * @param  SpecialCmd Pointer to the OPENBL_SpecialCmdTypeDef structure.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 void OPENBL_I2C_SpecialCommandProcess(OPENBL_SpecialCmdTypeDef *SpecialCmd)
 {
 }
 
 /**
- * @brief  This function is used to Set Flash busy state variable to activate busy state sending
- *         during flash operations
- * @retval None.
-*/
+  * @brief  This function is used to Set Flash busy state variable to activate busy state sending
+  *         during flash operations
+  * @retval None.
+  */
 void OPENBL_Enable_BusyState_Sending(void)
 {
 }
 
 /**
- * @brief  This function is used to disable the send of busy state in I2C non stretch mode.
- * @retval None.
-*/
+  * @brief  This function is used to disable the send of busy state in I2C non stretch mode.
+  * @retval None.
+  */
 void OPENBL_Disable_BusyState_Sending(void)
 {
 }

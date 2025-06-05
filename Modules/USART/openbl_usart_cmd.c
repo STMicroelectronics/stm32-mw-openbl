@@ -36,7 +36,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 static uint8_t USART_RAM_Buf[USART_RAM_BUFFER_SIZE];    /* Buffer used to store received data from the host */
-static uint8_t a_OPENBL_USART_CommandsList[OPENBL_USART_COMMANDS_NB_MAX] = {0};
+static uint8_t a_OPENBL_USART_CommandsList[OPENBL_USART_COMMANDS_NB_MAX] = {0U};
 static uint8_t UsartCommandsNumber = 0U;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -130,8 +130,8 @@ void OPENBL_USART_GetVersion(void)
   /* Send USART protocol version */
   OPENBL_USART_SendByte(OPENBL_USART_VERSION);
 
-  OPENBL_USART_SendByte(0x00);
-  OPENBL_USART_SendByte(0x00);
+  OPENBL_USART_SendByte(0x00U);
+  OPENBL_USART_SendByte(0x00U);
 
   /* Send last Acknowledge synchronization byte */
   OPENBL_USART_SendByte(ACK_BYTE);
@@ -146,7 +146,7 @@ void OPENBL_USART_GetID(void)
   /* Send Acknowledge byte to notify the host that the command is recognized */
   OPENBL_USART_SendByte(ACK_BYTE);
 
-  OPENBL_USART_SendByte(0x01);
+  OPENBL_USART_SendByte(0x01U);
 
   /* Send the device ID starting by the MSB byte then the LSB byte */
   OPENBL_USART_SendByte(DEVICE_ID_MSB);
@@ -157,9 +157,9 @@ void OPENBL_USART_GetID(void)
 }
 
 /**
- * @brief  This function is used to read memory from the device.
- * @retval None.
- */
+  * @brief  This function is used to read memory from the device.
+  * @retval None.
+  */
 void OPENBL_USART_ReadMemory(void)
 {
   uint32_t address;
@@ -214,9 +214,9 @@ void OPENBL_USART_ReadMemory(void)
 }
 
 /**
- * @brief  This function is used to write in to device memory.
- * @retval None.
- */
+  * @brief  This function is used to write in to device memory.
+  * @retval None.
+  */
 void OPENBL_USART_WriteMemory(void)
 {
   uint32_t address;
@@ -331,9 +331,9 @@ void OPENBL_USART_Go(void)
 }
 
 /**
- * @brief  This function is used to enable readout protection.
- * @retval None.
- */
+  * @brief  This function is used to enable readout protection.
+  * @retval None.
+  */
 void OPENBL_USART_ReadoutProtect(void)
 {
   /* Check memory protection then send adequate response */
@@ -356,9 +356,9 @@ void OPENBL_USART_ReadoutProtect(void)
 }
 
 /**
- * @brief  This function is used to disable readout protection.
- * @retval None.
- */
+  * @brief  This function is used to disable readout protection.
+  * @retval None.
+  */
 void OPENBL_USART_ReadoutUnprotect(void)
 {
   OPENBL_USART_SendByte(ACK_BYTE);
@@ -376,9 +376,9 @@ void OPENBL_USART_ReadoutUnprotect(void)
 }
 
 /**
- * @brief  This function is used to erase a memory.
- * @retval None.
- */
+  * @brief  This function is used to erase a memory.
+  * @retval None.
+  */
 void OPENBL_USART_EraseMemory(void)
 {
   uint32_t xor;
@@ -503,9 +503,9 @@ void OPENBL_USART_EraseMemory(void)
 }
 
 /**
- * @brief  This function is used to enable write protect.
- * @retval None.
- */
+  * @brief  This function is used to enable write protect.
+  * @retval None.
+  */
 void OPENBL_USART_WriteProtect(void)
 {
   uint32_t counter;
@@ -567,9 +567,9 @@ void OPENBL_USART_WriteProtect(void)
 }
 
 /**
- * @brief  This function is used to disable write protect.
- * @retval None.
- */
+  * @brief  This function is used to disable write protect.
+  * @retval None.
+  */
 void OPENBL_USART_WriteUnprotect(void)
 {
   ErrorStatus error_value;
@@ -584,7 +584,7 @@ void OPENBL_USART_WriteUnprotect(void)
     OPENBL_USART_SendByte(ACK_BYTE);
 
     /* Disable write protection */
-    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0);
+    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0U);
 
     OPENBL_USART_SendByte(ACK_BYTE);
 
@@ -596,12 +596,12 @@ void OPENBL_USART_WriteUnprotect(void)
 }
 
 /**
- * @brief  This function is used to get a valid address.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to get a valid address.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 uint8_t OPENBL_USART_GetAddress(uint32_t *Address)
 {
-  uint8_t data[4] = {0, 0, 0, 0};
+  uint8_t data[4] = {0U, 0U, 0U, 0U};
   uint8_t status;
   uint8_t xor;
 
@@ -636,9 +636,9 @@ uint8_t OPENBL_USART_GetAddress(uint32_t *Address)
 }
 
 /**
- * @brief  This function is used to execute special command commands.
- * @retval None.
- */
+  * @brief  This function is used to execute special command commands.
+  * @retval None.
+  */
 void OPENBL_USART_SpecialCommand(void)
 {
   OPENBL_SpecialCmdTypeDef *special_cmd;
@@ -711,6 +711,11 @@ void OPENBL_USART_SpecialCommand(void)
         /* Process the special command */
         OPENBL_USART_SpecialCommandProcess(special_cmd);
 
+        /* NOTE: In case of any operation inside "SpecialCommandProcess" function that prevents the code
+         * from returning to here (reset operation...), to be compatible with the OpenBL protocol,
+         * the user must ensure sending the last ACK in the application side.
+         */
+
         /* Send last acknowledgment */
         OPENBL_USART_SendByte(ACK_BYTE);
       }
@@ -719,9 +724,9 @@ void OPENBL_USART_SpecialCommand(void)
 }
 
 /**
- * @brief  This function is used to execute extended special command commands.
- * @retval None.
- */
+  * @brief  This function is used to execute extended special command commands.
+  * @retval None.
+  */
 void OPENBL_USART_ExtendedSpecialCommand(void)
 {
   OPENBL_SpecialCmdTypeDef *special_cmd;
@@ -833,7 +838,12 @@ void OPENBL_USART_ExtendedSpecialCommand(void)
             /* Process the special command */
             OPENBL_USART_SpecialCommandProcess(special_cmd);
 
-            /* Send acknowledgment */
+            /* NOTE: In case of any operation inside "SpecialCommandProcess" function that prevents the code
+             * from returning to here (reset operation...), to be compatible with the OpenBL protocol,
+             * the user must ensure sending the last ACK in the application side.
+             */
+
+            /* Send last acknowledgment */
             OPENBL_USART_SendByte(ACK_BYTE);
           }
         }
@@ -850,7 +860,7 @@ void OPENBL_USART_ExtendedSpecialCommand(void)
   */
 static uint8_t OPENBL_USART_ConstructCommandsTable(OPENBL_CommandsTypeDef *pUsartCmd)
 {
-  uint8_t i = 0;
+  uint8_t i = 0U;
 
   if (pUsartCmd->GetCommand != NULL)
   {
@@ -934,11 +944,11 @@ static uint8_t OPENBL_USART_ConstructCommandsTable(OPENBL_CommandsTypeDef *pUsar
 }
 
 /**
- * @brief  This function is used to get the operation code.
- * @param  OpCode Pointer to the operation code to be returned.
- * @param  CmdType Type of the command, Special command or extended special command.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to get the operation code.
+  * @param  OpCode Pointer to the operation code to be returned.
+  * @param  CmdType Type of the command, Special command or extended special command.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 static uint8_t OPENBL_USART_GetSpecialCmdOpCode(uint16_t *OpCode, OPENBL_SpecialCmdTypeTypeDef CmdType)
 {
   uint8_t op_code[2];

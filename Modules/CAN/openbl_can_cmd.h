@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 20201 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2021 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -20,6 +19,10 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef OPENBL_CAN_CMD_H
 #define OPENBL_CAN_CMD_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 /* Includes ------------------------------------------------------------------*/
 #include "openbl_core.h"
@@ -48,5 +51,9 @@ void OPENBL_CAN_ReadoutUnprotect(void);
 void OPENBL_CAN_LegacyEraseMemory(void);
 void OPENBL_CAN_WriteProtect(void);
 void OPENBL_CAN_WriteUnprotect(void);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* OPENBL_CAN_CMD_H */

@@ -20,6 +20,10 @@
 #ifndef OPENBL_USART_CMD_H
 #define OPENBL_USART_CMD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /* Includes ------------------------------------------------------------------*/
 #include "openbl_core.h"
 
@@ -45,5 +49,9 @@ void OPENBL_USART_WriteProtect(void);
 void OPENBL_USART_WriteUnprotect(void);
 void OPENBL_USART_SpecialCommand(void);
 void OPENBL_USART_ExtendedSpecialCommand(void);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* OPENBL_USART_CMD_H */

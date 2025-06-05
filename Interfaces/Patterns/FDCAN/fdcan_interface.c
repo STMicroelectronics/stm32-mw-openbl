@@ -43,9 +43,9 @@ static void OPENBL_FDCAN_Init(void);
 
 /* Private functions ---------------------------------------------------------*/
 /**
- * @brief  This function is used to initialize the used FDCAN instance.
- * @retval None.
- */
+  * @brief  This function is used to initialize the used FDCAN instance.
+  * @retval None.
+  */
 static void OPENBL_FDCAN_Init(void)
 {
   /*                Bit time configuration:
@@ -112,9 +112,9 @@ static void OPENBL_FDCAN_Init(void)
 /* Exported functions --------------------------------------------------------*/
 
 /**
- * @brief  This function is used to configure FDCAN pins and then initialize the used FDCAN instance.
- * @retval None.
- */
+  * @brief  This function is used to configure FDCAN pins and then initialize the used FDCAN instance.
+  * @retval None.
+  */
 void OPENBL_FDCAN_Configuration(void)
 {
   /* Enable all resources clocks --------------------------------------------*/
@@ -125,9 +125,9 @@ void OPENBL_FDCAN_Configuration(void)
 }
 
 /**
- * @brief  This function is used to De-initialize the FDCAN pins and instance.
- * @retval None.
- */
+  * @brief  This function is used to De-initialize the FDCAN pins and instance.
+  * @retval None.
+  */
 void OPENBL_FDCAN_DeInit(void)
 {
   /* Only de-initialize the FDCAN if it is not the current detected interface */
@@ -143,9 +143,9 @@ void OPENBL_FDCAN_DeInit(void)
 }
 
 /**
- * @brief  This function is used to detect if there is any activity on FDCAN protocol.
- * @retval Returns 1 if interface is detected else 0..
- */
+  * @brief  This function is used to detect if there is any activity on FDCAN protocol.
+  * @retval Returns 1 if interface is detected else 0..
+  */
 uint8_t OPENBL_FDCAN_ProtocolDetection(void)
 {
   /* check if FIFO 0 receive at least one message */
@@ -162,9 +162,9 @@ uint8_t OPENBL_FDCAN_ProtocolDetection(void)
 }
 
 /**
- * @brief  This function is used to get the command opcode from the host.
- * @retval Returns the command.
- */
+  * @brief  This function is used to get the command opcode from the host.
+  * @retval Returns the command.
+  */
 uint8_t OPENBL_FDCAN_GetCommandOpcode(void)
 {
   uint8_t command_opc      = 0x0;
@@ -273,10 +273,10 @@ void OPENBL_FDCAN_SendBytes(uint8_t *Buffer, uint32_t BufferSize)
 }
 
 /**
- * @brief  This function is used to process and execute the special commands.
- *         The user must define the special commands routine here.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to process and execute the special commands.
+  *         The user must define the special commands routine here.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 void OPENBL_FDCAN_SpecialCommandProcess(OPENBL_SpecialCmdTypeDef *Frame)
 {
   switch (Frame->OpCode)

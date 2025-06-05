@@ -26,7 +26,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static uint32_t NumberOfMemories = 0;
+static uint32_t NumberOfMemories = 0U;
 static OPENBL_MemoryTypeDef a_MemoriesTable[MEMORIES_SUPPORTED];
 
 /* Private function prototypes -----------------------------------------------*/
@@ -77,7 +77,7 @@ uint32_t OPENBL_MEM_GetAddressArea(uint32_t Address)
   uint32_t mem_area = AREA_ERROR;
   uint32_t counter;
 
-  for (counter = 0; counter < NumberOfMemories; counter++)
+  for (counter = 0U; counter < NumberOfMemories; counter++)
   {
     if ((Address >= a_MemoriesTable[counter].StartAddress) && (Address < a_MemoriesTable[counter].EndAddress))
     {
@@ -132,12 +132,12 @@ uint8_t OPENBL_MEM_Read(uint32_t Address, uint32_t MemoryIndex)
     }
     else
     {
-      value = 0;
+      value = 0U;
     }
   }
   else
   {
-    value = 0;
+    value = 0U;
   }
 
   return value;
@@ -342,11 +342,11 @@ uint8_t OPENBL_MEM_CheckJumpAddress(uint32_t Address)
 
   if (a_MemoriesTable[memory_index].JumpToAddress != NULL)
   {
-    status = 1;
+    status = 1U;
   }
   else
   {
-    status = 0;
+    status = 0U;
   }
 
   return status;

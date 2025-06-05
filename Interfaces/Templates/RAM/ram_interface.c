@@ -32,7 +32,7 @@
 /* Exported variables --------------------------------------------------------*/
 OPENBL_MemoryTypeDef RAM_Descriptor =
 {
-  RAM_START_ADDRESS + OPENBL_RAM_SIZE, /* OPENBL_RAM_SIZE is added to the RAM start address to protect OpenBootloader RAM area */
+  RAM_START_ADDRESS + OPENBL_RAM_SIZE, /* OPENBL_RAM_SIZE is added to protect OpenBootloader RAM area */
   RAM_END_ADDRESS,
   RAM_SIZE,
   RAM_AREA,

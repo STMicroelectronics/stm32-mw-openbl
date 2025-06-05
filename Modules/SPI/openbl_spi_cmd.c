@@ -36,7 +36,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* Buffer used to store received data from the host */
 static uint8_t SPI_RAM_Buf[SPI_RAM_BUFFER_SIZE];
-static uint8_t a_OPENBL_SPI_CommandsList[OPENBL_SPI_COMMANDS_NB_MAX] = {0};
+static uint8_t a_OPENBL_SPI_CommandsList[OPENBL_SPI_COMMANDS_NB_MAX] = {0U};
 static uint8_t SpiCommandsNumber = 0U;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -143,7 +143,7 @@ void OPENBL_SPI_GetID(void)
   /* Send Acknowledge byte to notify the host that the command is recognized */
   OPENBL_SPI_SendAcknowledgeByte(ACK_BYTE);
 
-  OPENBL_SPI_SendByte(0x01);
+  OPENBL_SPI_SendByte(0x01U);
 
   /* Send the device ID starting by the MSB byte then the LSB byte */
   OPENBL_SPI_SendByte(DEVICE_ID_MSB);
@@ -154,9 +154,9 @@ void OPENBL_SPI_GetID(void)
 }
 
 /**
- * @brief  This function is used to read memory from the device.
- * @retval None.
- */
+  * @brief  This function is used to read memory from the device.
+  * @retval None.
+  */
 void OPENBL_SPI_ReadMemory(void)
 {
   uint32_t address;
@@ -211,9 +211,9 @@ void OPENBL_SPI_ReadMemory(void)
 }
 
 /**
- * @brief  This function is used to write in to device memory.
- * @retval None.
- */
+  * @brief  This function is used to write in to device memory.
+  * @retval None.
+  */
 void OPENBL_SPI_WriteMemory(void)
 {
   uint32_t address;
@@ -328,9 +328,9 @@ void OPENBL_SPI_Go(void)
 }
 
 /**
- * @brief  This function is used to enable readout protection.
- * @retval None.
- */
+  * @brief  This function is used to enable readout protection.
+  * @retval None.
+  */
 void OPENBL_SPI_ReadoutProtect(void)
 {
   /* Check memory protection then send adequate response */
@@ -353,12 +353,12 @@ void OPENBL_SPI_ReadoutProtect(void)
 }
 
 /**
- * @brief  This function is used to disable readout protection.
- * @note   Going from RDP level 1 to RDP level 0 erases all the flash,
- *         so the send of the second acknowledge after disabling the read protection
- *         is not possible, this is why the two ACKs are sent successively
- * @retval None.
- */
+  * @brief  This function is used to disable readout protection.
+  * @note   Going from RDP level 1 to RDP level 0 erases all the flash,
+  *         so the send of the second acknowledge after disabling the read protection
+  *         is not possible, this is why the two ACKs are sent successively
+  * @retval None.
+  */
 void OPENBL_SPI_ReadoutUnprotect(void)
 {
   OPENBL_SPI_SendAcknowledgeByte(ACK_BYTE);
@@ -373,9 +373,9 @@ void OPENBL_SPI_ReadoutUnprotect(void)
 }
 
 /**
- * @brief  This function is used to erase a memory.
- * @retval None.
- */
+  * @brief  This function is used to erase a memory.
+  * @retval None.
+  */
 void OPENBL_SPI_EraseMemory(void)
 {
   uint32_t xor;
@@ -521,9 +521,9 @@ void OPENBL_SPI_EraseMemory(void)
 }
 
 /**
- * @brief  This function is used to enable write protect.
- * @retval None.
- */
+  * @brief  This function is used to enable write protect.
+  * @retval None.
+  */
 void OPENBL_SPI_WriteProtect(void)
 {
   uint8_t counter;
@@ -596,9 +596,9 @@ void OPENBL_SPI_WriteProtect(void)
 }
 
 /**
- * @brief  This function is used to disable write protect.
- * @retval None.
- */
+  * @brief  This function is used to disable write protect.
+  * @retval None.
+  */
 void OPENBL_SPI_WriteUnprotect(void)
 {
   ErrorStatus error_value;
@@ -613,7 +613,7 @@ void OPENBL_SPI_WriteUnprotect(void)
     OPENBL_SPI_SendAcknowledgeByte(ACK_BYTE);
 
     /* Disable write protection */
-    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0);
+    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0U);
 
     OPENBL_SPI_SendAcknowledgeByte(ACK_BYTE);
 
@@ -625,12 +625,12 @@ void OPENBL_SPI_WriteUnprotect(void)
 }
 
 /**
- * @brief  This function is used to get a valid address.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to get a valid address.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 uint8_t OPENBL_SPI_GetAddress(uint32_t *Address)
 {
-  uint8_t data[4] = {0, 0, 0, 0};
+  uint8_t data[4] = {0U, 0U, 0U, 0U};
   uint8_t status;
   uint8_t xor;
 
@@ -666,9 +666,9 @@ uint8_t OPENBL_SPI_GetAddress(uint32_t *Address)
 }
 
 /**
- * @brief  This function is used to execute special read commands.
- * @retval None.
- */
+  * @brief  This function is used to execute special read commands.
+  * @retval None.
+  */
 void OPENBL_SPI_SpecialCommand(void)
 {
   OPENBL_SpecialCmdTypeDef *special_cmd;
@@ -741,6 +741,11 @@ void OPENBL_SPI_SpecialCommand(void)
         /* Process the special command */
         OPENBL_SPI_SpecialCommandProcess(special_cmd);
 
+        /* NOTE: In case of any operation inside "SpecialCommandProcess" function that prevents the code
+         * from returning to here (reset operation...), to be compatible with the OpenBL protocol,
+         * the user must ensure sending the last ACK in the application side.
+         */
+
         /* Send last acknowledgment */
         OPENBL_SPI_SendAcknowledgeByte(ACK_BYTE);
       }
@@ -749,9 +754,9 @@ void OPENBL_SPI_SpecialCommand(void)
 }
 
 /**
- * @brief  This function is used to execute special write commands.
- * @retval None.
- */
+  * @brief  This function is used to execute special write commands.
+  * @retval None.
+  */
 void OPENBL_SPI_ExtendedSpecialCommand(void)
 {
   OPENBL_SpecialCmdTypeDef *special_cmd;
@@ -864,7 +869,12 @@ void OPENBL_SPI_ExtendedSpecialCommand(void)
             /* Process the special command */
             OPENBL_SPI_SpecialCommandProcess(special_cmd);
 
-            /* Send acknowledgment */
+            /* NOTE: In case of any operation inside "SpecialCommandProcess" function that prevents the code
+             * from returning to here (reset operation...), to be compatible with the OpenBL protocol,
+             * the user must ensure sending the last ACK in the application side.
+             */
+
+            /* Send last acknowledgment */
             OPENBL_SPI_SendAcknowledgeByte(ACK_BYTE);
           }
         }
@@ -881,7 +891,7 @@ void OPENBL_SPI_ExtendedSpecialCommand(void)
   */
 static uint8_t OPENBL_SPI_ConstructCommandsTable(OPENBL_CommandsTypeDef *pSpiCmd)
 {
-  uint8_t i = 0;
+  uint8_t i = 0U;
 
   if (pSpiCmd->GetCommand != NULL)
   {
@@ -965,11 +975,11 @@ static uint8_t OPENBL_SPI_ConstructCommandsTable(OPENBL_CommandsTypeDef *pSpiCmd
 }
 
 /**
- * @brief  This function is used to get the operation code.
- * @param  OpCode Pointer to the operation code to be returned.
- * @param  CmdType Type of the command, Special read or special write.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to get the operation code.
+  * @param  OpCode Pointer to the operation code to be returned.
+  * @param  CmdType Type of the command, Special read or special write.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 static uint8_t OPENBL_SPI_GetSpecialCmdOpCode(uint16_t *OpCode, OPENBL_SpecialCmdTypeTypeDef CmdType)
 {
   uint8_t op_code[2];

@@ -34,7 +34,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static uint8_t a_OPENBL_FDCAN_CommandsList[OPENBL_FDCAN_COMMANDS_NB_MAX] = {0};
+static uint8_t a_OPENBL_FDCAN_CommandsList[OPENBL_FDCAN_COMMANDS_NB_MAX] = {0U};
 static uint8_t FdcanCommandsNumber = 0U;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -129,8 +129,8 @@ void OPENBL_FDCAN_GetVersion(void)
   OPENBL_FDCAN_SendByte(OPENBL_FDCAN_VERSION);
 
   /* Send dummy bytes */
-  TxData[0] = 0x0;
-  TxData[1] = 0x0;
+  TxData[0] = 0x0U;
+  TxData[1] = 0x0U;
   OPENBL_FDCAN_SendBytes(TxData, FDCAN_DLC_BYTES_2);
 
   /* Send last Acknowledge synchronization byte */
@@ -195,7 +195,7 @@ void OPENBL_FDCAN_ReadMemory(void)
 
       while (count != 0U)
       {
-        data_length = 0;
+        data_length = 0U;
 
         for (counter = 64U ; counter > 0U; counter--)
         {
@@ -225,7 +225,7 @@ void OPENBL_FDCAN_ReadMemory(void)
         /* Fill the rest of the buffer with 0xFF */
         for (counter = (64U - single) ; counter > 0U; counter--)
         {
-          TxData[data_length] = 0xFF;
+          TxData[data_length] = 0xFFU;
 
           data_length++;
         }
@@ -271,7 +271,7 @@ void OPENBL_FDCAN_WriteMemory(void)
       count = CodeSize / 64U;
       single = (uint32_t)(CodeSize % 64U);
 
-      data_length = 0;
+      data_length = 0U;
 
       if (count != 0U)
       {
@@ -344,9 +344,9 @@ void OPENBL_FDCAN_Go(void)
 }
 
 /**
- * @brief  This function is used to enable readout protection.
- * @retval None.
- */
+  * @brief  This function is used to enable readout protection.
+  * @retval None.
+  */
 void OPENBL_FDCAN_ReadoutProtect(void)
 {
   /* Check memory protection then send adequate response */
@@ -369,9 +369,9 @@ void OPENBL_FDCAN_ReadoutProtect(void)
 }
 
 /**
- * @brief  This function is used to disable readout protection.
- * @retval None.
- */
+  * @brief  This function is used to disable readout protection.
+  * @retval None.
+  */
 void OPENBL_FDCAN_ReadoutUnprotect(void)
 {
   OPENBL_FDCAN_SendByte(ACK_BYTE);
@@ -389,9 +389,9 @@ void OPENBL_FDCAN_ReadoutUnprotect(void)
 }
 
 /**
- * @brief  This function is used to erase a memory.
- * @retval None.
- */
+  * @brief  This function is used to erase a memory.
+  * @retval None.
+  */
 void OPENBL_FDCAN_EraseMemory(void)
 {
   uint16_t data;
@@ -481,9 +481,9 @@ void OPENBL_FDCAN_EraseMemory(void)
 }
 
 /**
- * @brief  This function is used to enable write protect.
- * @retval None.
- */
+  * @brief  This function is used to enable write protect.
+  * @retval None.
+  */
 void OPENBL_FDCAN_WriteProtect(void)
 {
   uint32_t length;
@@ -513,9 +513,9 @@ void OPENBL_FDCAN_WriteProtect(void)
 }
 
 /**
- * @brief  This function is used to disable write protect.
- * @retval None.
- */
+  * @brief  This function is used to disable write protect.
+  * @retval None.
+  */
 void OPENBL_FDCAN_WriteUnprotect(void)
 {
   ErrorStatus error_value;
@@ -530,7 +530,7 @@ void OPENBL_FDCAN_WriteUnprotect(void)
     OPENBL_FDCAN_SendByte(ACK_BYTE);
 
     /* Disable write protection */
-    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0);
+    error_value = OPENBL_MEM_SetWriteProtection(DISABLE, OPENBL_DEFAULT_MEM, NULL, 0U);
 
     OPENBL_FDCAN_SendByte(ACK_BYTE);
 
@@ -568,9 +568,9 @@ uint8_t OPENBL_FDCAN_GetAddress(uint32_t *Address)
 }
 
 /**
- * @brief  This function is used to execute special command commands.
- * @retval None.
- */
+  * @brief  This function is used to execute special command commands.
+  * @retval None.
+  */
 void OPENBL_FDCAN_SpecialCommand(void)
 {
   OPENBL_SpecialCmdTypeDef *special_cmd;
@@ -640,6 +640,11 @@ void OPENBL_FDCAN_SpecialCommand(void)
       /* Process the special command */
       OPENBL_FDCAN_SpecialCommandProcess(special_cmd);
 
+      /* NOTE: In case of any operation inside "SpecialCommandProcess" function that prevents the code
+       * from returning to here (reset operation...), to be compatible with the OpenBL protocol,
+       * the user must ensure sending the last ACK in the application side.
+       */
+
       /* Send last acknowledgment */
       OPENBL_FDCAN_SendByte(ACK_BYTE);
     }
@@ -647,9 +652,9 @@ void OPENBL_FDCAN_SpecialCommand(void)
 }
 
 /**
- * @brief  This function is used to execute extended special command commands.
- * @retval None.
- */
+  * @brief  This function is used to execute extended special command commands.
+  * @retval None.
+  */
 void OPENBL_FDCAN_ExtendedSpecialCommand(void)
 {
   OPENBL_SpecialCmdTypeDef *special_cmd;
@@ -682,7 +687,7 @@ void OPENBL_FDCAN_ExtendedSpecialCommand(void)
     special_cmd->OpCode  = op_code;
 
     /* Initialize the data length variable */
-    data_length = 0;
+    data_length = 0U;
 
     /* Get the number of bytes to be received */
     OPENBL_FDCAN_ReadBytes(RxData, 2U);
@@ -770,7 +775,12 @@ void OPENBL_FDCAN_ExtendedSpecialCommand(void)
         /* Process the special command */
         OPENBL_FDCAN_SpecialCommandProcess(special_cmd);
 
-        /* Send acknowledgment */
+        /* NOTE: In case of any operation inside "SpecialCommandProcess" function that prevents the code
+         * from returning to here (reset operation...), to be compatible with the OpenBL protocol,
+         * the user must ensure sending the last ACK in the application side.
+         */
+
+        /* Send last acknowledgment */
         OPENBL_FDCAN_SendByte(ACK_BYTE);
       }
     }
@@ -785,7 +795,7 @@ void OPENBL_FDCAN_ExtendedSpecialCommand(void)
   */
 static uint8_t OPENBL_FDCAN_ConstructCommandsTable(OPENBL_CommandsTypeDef *pFdcanCmd)
 {
-  uint8_t i = 0;
+  uint8_t i = 0U;
 
   if (pFdcanCmd->GetCommand != NULL)
   {
@@ -869,11 +879,11 @@ static uint8_t OPENBL_FDCAN_ConstructCommandsTable(OPENBL_CommandsTypeDef *pFdca
 }
 
 /**
- * @brief  This function is used to get the operation code.
- * @param  OpCode Pointer to the operation code to be returned.
- * @param  CmdType Type of the command, Special command or extended special command.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to get the operation code.
+  * @param  OpCode Pointer to the operation code to be returned.
+  * @param  CmdType Type of the command, Special command or extended special command.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 static uint8_t OPENBL_FDCAN_GetSpecialCmdOpCode(uint16_t *OpCode, OPENBL_SpecialCmdTypeTypeDef CmdType)
 {
   uint8_t op_code[2];

@@ -26,6 +26,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+#define DEFAULT_USART_BAUDRATE   115200U
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 static uint8_t UsartDetected = 0U;
@@ -37,15 +39,15 @@ static void OPENBL_USART_Init(void);
 /* Private functions ---------------------------------------------------------*/
 
 /**
- * @brief  This function is used to initialize the used USART instance.
- * @retval None.
- */
+  * @brief  This function is used to initialize the used USART instance.
+  * @retval None.
+  */
 static void OPENBL_USART_Init(void)
 {
   LL_USART_InitTypeDef USART_InitStruct;
 
   USART_InitStruct.PrescalerValue      = LL_USART_PRESCALER_DIV1;
-  USART_InitStruct.BaudRate            = 115200U;
+  USART_InitStruct.BaudRate            = DEFAULT_USART_BAUDRATE;
   USART_InitStruct.DataWidth           = LL_USART_DATAWIDTH_9B;
   USART_InitStruct.StopBits            = LL_USART_STOPBITS_1;
   USART_InitStruct.Parity              = LL_USART_PARITY_EVEN;
@@ -61,7 +63,7 @@ static void OPENBL_USART_Init(void)
   else
   {
     LL_USART_DisableAutoBaudRate(USARTx);
-    USART_InitStruct.BaudRate = 115200;
+    USART_InitStruct.BaudRate = DEFAULT_USART_BAUDRATE;
   }
 
   LL_USART_Init(USARTx, &USART_InitStruct);
@@ -71,9 +73,9 @@ static void OPENBL_USART_Init(void)
 /* Exported functions --------------------------------------------------------*/
 
 /**
- * @brief  This function is used to configure USART pins and then initialize the used USART instance.
- * @retval None.
- */
+  * @brief  This function is used to configure USART pins and then initialize the used USART instance.
+  * @retval None.
+  */
 void OPENBL_USART_Configuration(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct;
@@ -101,9 +103,9 @@ void OPENBL_USART_Configuration(void)
 }
 
 /**
- * @brief  This function is used to De-initialize the USART pins and instance.
- * @retval None.
- */
+  * @brief  This function is used to De-initialize the USART pins and instance.
+  * @retval None.
+  */
 void OPENBL_USART_DeInit(void)
 {
   /* Only de-initialize the USART if it is not the current detected interface */
@@ -116,9 +118,9 @@ void OPENBL_USART_DeInit(void)
 }
 
 /**
- * @brief  This function is used to detect if there is any activity on USART protocol.
- * @retval Returns 1 if interface is detected else 0.
- */
+  * @brief  This function is used to detect if there is any activity on USART protocol.
+  * @retval Returns 1 if interface is detected else 0.
+  */
 uint8_t OPENBL_USART_ProtocolDetection(void)
 {
   /* Check if the USARTx is addressed */
@@ -141,9 +143,9 @@ uint8_t OPENBL_USART_ProtocolDetection(void)
 }
 
 /**
- * @brief  This function is used to get the command opcode from the host.
- * @retval Returns the command.
- */
+  * @brief  This function is used to get the command opcode from the host.
+  * @retval Returns the command.
+  */
 uint8_t OPENBL_USART_GetCommandOpcode(void)
 {
   uint8_t command_opc = 0x0;
@@ -189,11 +191,11 @@ void OPENBL_USART_SendByte(uint8_t Byte)
 }
 
 /**
- * @brief  This function is used to process and execute the special commands.
- *         The user must define the special commands routine here.
- * @param  SpecialCmd Pointer to the OPENBL_SpecialCmdTypeDef structure.
- * @retval Returns NACK status in case of error else returns ACK status.
- */
+  * @brief  This function is used to process and execute the special commands.
+  *         The user must define the special commands routine here.
+  * @param  SpecialCmd Pointer to the OPENBL_SpecialCmdTypeDef structure.
+  * @retval Returns NACK status in case of error else returns ACK status.
+  */
 void OPENBL_USART_SpecialCommandProcess(OPENBL_SpecialCmdTypeDef *SpecialCmd)
 {
   switch (SpecialCmd->OpCode)

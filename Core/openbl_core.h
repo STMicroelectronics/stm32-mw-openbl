@@ -20,6 +20,10 @@
 #ifndef OPENBL_CORE_H
 #define OPENBL_CORE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
 
@@ -30,7 +34,7 @@
 #define ACK_BYTE                          0x79U             /* Acknowledge Byte ID */
 #define NACK_BYTE                         0x1FU             /* No Acknowledge Byte ID */
 #define BUSY_BYTE                         0x76U             /* Busy Byte */
-#define SYNC_BYTE                         0xA5U             /* synchronization byte */
+#define SYNC_BYTE                         0xA5U             /* Synchronization byte */
 #define SPECIAL_CMD_SIZE_BUFFER1          128U              /* Special command received data buffer size */
 #define SPECIAL_CMD_SIZE_BUFFER2          1024U             /* Special command write data buffer size */
 
@@ -54,8 +58,8 @@
 #define CMD_NS_WRITE_UNPROTECT            0x74U             /* No Stretch Write Unprotect command */
 #define CMD_NS_READ_PROTECT               0x83U             /* No Stretch Read Protect command */
 #define CMD_NS_READ_UNPROTECT             0x93U             /* No Stretch Read Unprotect command */
-#define CMD_SPECIAL_COMMAND               0x50U             /* Special Read Protect */
-#define CMD_EXTENDED_SPECIAL_COMMAND      0x51U             /* Special write command */
+#define CMD_SPECIAL_COMMAND               0x50U             /* Special Command command */
+#define CMD_EXTENDED_SPECIAL_COMMAND      0x51U             /* Extended Special Command command */
 #define CMD_CHECKSUM                      0xA1U             /* Checksum command */
 
 /* Exported types ------------------------------------------------------------*/
@@ -122,5 +126,9 @@ void OPENBL_InterfacesDeInit(void);
 uint32_t OPENBL_InterfaceDetection(void);
 void OPENBL_CommandProcess(void);
 ErrorStatus OPENBL_RegisterInterface(OPENBL_HandleTypeDef *Interface);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* OPENBL_CORE_H */

@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    openbl_spi_cmd.h
+  * @file    i3c_interface.h
   * @author  MCD Application Team
-  * @brief   Header for openbl_spi_cmd.c module
+  * @brief   Header for i3c_interface.c module
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2019-2021 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -17,41 +17,39 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef OPENBL_SPI_CMD_H
-#define OPENBL_SPI_CMD_H
+#ifndef I3C_INTERFACE_H
+#define I3C_INTERFACE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdint.h>
+#include "common_interface.h"
 #include "openbl_core.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-#define OPENBL_SPI_VERSION                 0x11U  /* Open Bootloader SPI protocol V1.1 */
-
 /* Exported macro ------------------------------------------------------------*/
-/* Exported variables --------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-OPENBL_CommandsTypeDef *OPENBL_SPI_GetCommandsList(void);
-void OPENBL_SPI_SetCommandsList(OPENBL_CommandsTypeDef *pSpiCmd);
-void OPENBL_SPI_GetCommand(void);
-void OPENBL_SPI_GetVersion(void);
-void OPENBL_SPI_GetID(void);
-void OPENBL_SPI_ReadMemory(void);
-void OPENBL_SPI_WriteMemory(void);
-void OPENBL_SPI_Go(void);
-void OPENBL_SPI_ReadoutProtect(void);
-void OPENBL_SPI_ReadoutUnprotect(void);
-void OPENBL_SPI_EraseMemory(void);
-void OPENBL_SPI_WriteProtect(void);
-void OPENBL_SPI_WriteUnprotect(void);
-void OPENBL_SPI_SpecialCommand(void);
-void OPENBL_SPI_ExtendedSpecialCommand(void);
+void OPENBL_I3C_Configuration(void);
+void OPENBL_I3C_DeInit(void);
+
+uint8_t OPENBL_I3C_ProtocolDetection(void);
+uint8_t OPENBL_I3C_GetCommandOpcode(void);
+uint8_t OPENBL_I3C_ReadByte(void);
+void OPENBL_I3C_SendByte(uint8_t Byte);
+void OPENBL_I3C_SendAcknowledgeByte(uint8_t Acknowledge);
+void OPENBL_I3C_SendBytes(uint8_t *pBuffer, uint32_t BufferSize);
+void OPENBL_I3C_ReadBytes(uint8_t *pBuffer, uint32_t BufferSize);
+
+void OPENBL_I3C_SpecialCommandProcess(OPENBL_SpecialCmdTypeDef *SpecialCmd);
+
+void OPENBL_I3C_IRQHandler(void);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* OPENBL_SPI_CMD_H */
+#endif /* I3C_INTERFACE_H */
