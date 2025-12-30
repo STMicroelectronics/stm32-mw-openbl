@@ -59,7 +59,7 @@ static void OPENBL_FDCAN_Init(void)
     Phase_segment_2            | 8 tq         | 4 tq
     Synchronization_Jump_width | 8 tq         | 4 tq
     Bit_length                 | 40 tq = 2 us | 10 tq = 0.5 us
-    Bit_rate                   | 0.5 MBit/s   | 2 MBit/s
+    Bit_rate                   | 0.25 MBit/s  | 1 MBit/s
   */
 
   hfdcan.Instance                  = FDCANx;
