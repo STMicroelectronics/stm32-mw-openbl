@@ -1,0 +1,2042 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::BOOTLOADER:STM32CubeMX2 Config:OpenBootloader",
+  "type": "object",
+  "grammarVersion": "3.8.0",
+  "functions": [
+    {
+      "path": ".config/template/helpers/openbootloader_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "title": "General information",
+          "properties": {
+            "version": {
+              "title": "Open Bootloader version",
+              "type": "string",
+              "default": "7.0.0",
+              "actions": [
+                {
+                  "type": "warning",
+                  "condition": "$get('envVar.value', 'HAL_ICACHE_CORE_ENABLED') == true",
+                  "message": "Open Bootloader accesses multiple memory areas. To be able to perform successful read/write/erase operations the cache must be disabled."
+                }
+              ]
+            }
+          }
+        },
+        "profile": {
+          "title": "Profile",
+          "type": "object",
+          "properties": {
+            "profile_type": {
+              "title": "Profile selection",
+              "type": "string",
+              "oneOf": [
+                {
+                  "title": "Default",
+                  "const": "DEFAULT"
+                }
+              ],
+              "default": "DEFAULT"
+            }
+          }
+        },
+        "core": {
+          "type": "object",
+          "title": "Core",
+          "properties": {
+            "additional": {
+              "type": "object",
+              "title": "Advanced features",
+              "properties": {
+                "protocol_class": {
+                  "title": "Protocol",
+                  "type": "object",
+                  "properties": {
+                    "usart_class": {
+                      "title": "USART",
+                      "type": "boolean",
+                      "description": "Activate the USART protocol on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "USART_Protocol_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": true,
+                      "actions": [
+                        {
+                          "type": "exclude",
+                          "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'usart') || !$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'uart') || !$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'lpuart')"
+                        }
+                      ]
+                    },
+                    "usart_commands": {
+                      "type": "object",
+                      "title": "Commands",
+                      "description": "This group lets the user enable only the USART commands required by the target product.",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core.additional.protocol_class.usart_class"
+                        }
+                      ],
+                      "properties": {
+                        "get_commands_class": {
+                          "title": "Get commands",
+                          "type": "boolean",
+                          "description": "Activate Get commands USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_Commands_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_id_class": {
+                          "title": "Get id",
+                          "type": "boolean",
+                          "description": "Activate Get STM32 ID USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_id_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_version_class": {
+                          "title": "Get version",
+                          "type": "boolean",
+                          "description": "Activate Get USART protocol version command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_version_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_memory_class": {
+                          "title": "Read memory",
+                          "type": "boolean",
+                          "description": "Activate read memory USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Memory_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "go_class": {
+                          "title": "Go",
+                          "type": "boolean",
+                          "description": "Activate Go (Jump) USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Go_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_memory_class": {
+                          "title": "Write memory",
+                          "type": "boolean",
+                          "description": "Activate write memory USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Memory_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "erase_memory_class": {
+                          "title": "Erase flash memory",
+                          "type": "boolean",
+                          "description": "Activate erase memory USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Erase_Memory_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_protect_class": {
+                          "title": "Write protect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write protect memory USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Protect_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_unprotect_class": {
+                          "title": "Write unprotect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write unprotect memory USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Unprotect_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_protect_class": {
+                          "title": "Read protect",
+                          "type": "boolean",
+                          "description": "Activate read protect memory USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_protect_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "read_unprotect_class": {
+                          "title": "Read unprotect",
+                          "type": "boolean",
+                          "description": "Activate read unprotect memory USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Unprotect_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "special_command_class": {
+                          "title": "Special",
+                          "type": "boolean",
+                          "description": "Activate special command USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Special_Command_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ext_special_command_class": {
+                          "title": "Extended special",
+                          "type": "boolean",
+                          "description": "Activate extended special command USART protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ext_Special_Command_Usart",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        }
+                      }
+                    },
+                    "i2c_class": {
+                      "title": "I2C",
+                      "type": "boolean",
+                      "description": "Activate the I2C protocol on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "I2C_Protocol_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "exclude",
+                          "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'i2c')"
+                        }
+                      ]
+                    },
+                    "i2c_commands": {
+                      "type": "object",
+                      "title": "Commands",
+                      "description": "This group lets the user enable only the I2C commands required by the target product. For a given command, stretch and non-stretch will have the same result but using different HW I2C transmission methods.",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core.additional.protocol_class.i2c_class"
+                        }
+                      ],
+                      "properties": {
+                        "get_commands_class": {
+                          "title": "Get commands",
+                          "type": "boolean",
+                          "description": "Activate Get commands I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_Commands_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_id_class": {
+                          "title": "Get id",
+                          "type": "boolean",
+                          "description": "Activate Get STM32 ID I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_id_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_version_class": {
+                          "title": "Get version",
+                          "type": "boolean",
+                          "description": "Activate Get I2C protocol version command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_version_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_memory_class": {
+                          "title": "Read memory",
+                          "type": "boolean",
+                          "description": "Activate read memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Memory_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "go_class": {
+                          "title": "Go",
+                          "type": "boolean",
+                          "description": "Activate Go (Jump) I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Go_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_memory_class": {
+                          "title": "Write memory",
+                          "type": "boolean",
+                          "description": "Activate stretch write memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Memory_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ns_write_memory_class": {
+                          "title": "Non-stretch write memory",
+                          "type": "boolean",
+                          "description": "Activate non-stretch write memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ns_Write_Memory_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "erase_memory_class": {
+                          "title": "Erase flash memory",
+                          "type": "boolean",
+                          "description": "Activate stretch erase memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Erase_Memory_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ns_erase_memory_class": {
+                          "title": "Non-stretch erase flash memory",
+                          "type": "boolean",
+                          "description": "Activate non-stretch erase memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ns_Erase_Memory_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_protect_class": {
+                          "title": "Write protect flash memory",
+                          "type": "boolean",
+                          "description": "Activate stretch write protect memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Protect_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ns_write_protect_class": {
+                          "title": "Non-stretch write protect flash memory",
+                          "type": "boolean",
+                          "description": "Activate non-stretch write protect memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ns_Write_Protect_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_unprotect_class": {
+                          "title": "Write unprotect flash memory",
+                          "type": "boolean",
+                          "description": "Activate stretch Write Unprotect Flash Memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Unprotect_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ns_write_unprotect_class": {
+                          "title": "Non-stretch write unprotect flash memory",
+                          "type": "boolean",
+                          "description": "Activate non-stretch write unprotect memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ns_Write_Unprotect_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_protect_class": {
+                          "title": "Read protect",
+                          "type": "boolean",
+                          "description": "Activate stretch read protect memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_protect_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "ns_read_protect_class": {
+                          "title": "Non-stretch read protect",
+                          "type": "boolean",
+                          "description": "Activate non-stretch read protect memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ns_Read_protect_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "read_unprotect_class": {
+                          "title": "Read unprotect",
+                          "type": "boolean",
+                          "description": "Activate stretch read unprotect memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Unprotect_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "ns_read_unprotect_class": {
+                          "title": "Non-stretch read unprotect",
+                          "type": "boolean",
+                          "description": "Activate non-stretch read unprotect memory I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ns_Read_Unprotect_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "special_command_class": {
+                          "title": "Special",
+                          "type": "boolean",
+                          "description": "Activate special command I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Special_Command_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ext_special_command_class": {
+                          "title": "Extended special",
+                          "type": "boolean",
+                          "description": "Activate extended special command I2C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ext_Special_Command_I2c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        }
+                      }
+                    },
+                    "spi_class": {
+                      "title": "SPI",
+                      "type": "boolean",
+                      "description": "Activate the SPI protocol on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "SPI_Protocol_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "exclude",
+                          "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'spi')"
+                        }
+                      ]
+                    },
+                    "spi_commands": {
+                      "type": "object",
+                      "title": "Commands",
+                      "description": "This group lets the user enable only the SPI commands required by the target product.",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core.additional.protocol_class.spi_class"
+                        }
+                      ],
+                      "properties": {
+                        "get_commands_class": {
+                          "title": "Get commands",
+                          "type": "boolean",
+                          "description": "Activate Get commands SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_Commands_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_id_class": {
+                          "title": "Get id",
+                          "type": "boolean",
+                          "description": "Activate Get STM32 ID SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_id_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_version_class": {
+                          "title": "Get version",
+                          "type": "boolean",
+                          "description": "Activate Get SPI protocol version command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_version_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_memory_class": {
+                          "title": "Read memory",
+                          "type": "boolean",
+                          "description": "Activate read memory SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Memory_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "go_class": {
+                          "title": "Go",
+                          "type": "boolean",
+                          "description": "Activate Go (Jump) SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Go_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_memory_class": {
+                          "title": "Write memory",
+                          "type": "boolean",
+                          "description": "Activate write memory SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Memory_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "erase_memory_class": {
+                          "title": "Erase flash memory",
+                          "type": "boolean",
+                          "description": "Activate erase memory SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Erase_Memory_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_protect_class": {
+                          "title": "Write protect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write protect memory SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Protect_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_unprotect_class": {
+                          "title": "Write unprotect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write unprotect memory SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Unprotect_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_protect_class": {
+                          "title": "Read protect",
+                          "type": "boolean",
+                          "description": "Activate read protect memory SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_protect_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "read_unprotect_class": {
+                          "title": "Read unprotect",
+                          "type": "boolean",
+                          "description": "Activate read unprotect memory SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Unprotect_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "special_command_class": {
+                          "title": "Special",
+                          "type": "boolean",
+                          "description": "Activate special command SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Special_Command_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ext_special_command_class": {
+                          "title": "Extended special",
+                          "type": "boolean",
+                          "description": "Activate extended special command SPI protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ext_Special_Command_Spi",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        }
+                      }
+                    },
+                    "usb_class": {
+                      "title": "USB-DFU",
+                      "type": "boolean",
+                      "description": "Activate the USB-DFU protocol on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "USB_Protocol_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "exclude",
+                          "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'usb')"
+                        }
+                      ]
+                    },
+                    "fdcan_class": {
+                      "title": "FDCAN",
+                      "type": "boolean",
+                      "description": "Activate the FDCAN protocol on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "FDCAN_Protocol_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "exclude"
+                        }
+                      ]
+                    },
+                    "fdcan_commands": {
+                      "type": "object",
+                      "title": "Commands",
+                      "description": "This group lets the user enable only the FDCAN commands required by the target product.",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core.additional.protocol_class.fdcan_class"
+                        }
+                      ],
+                      "properties": {
+                        "get_commands_class": {
+                          "title": "Get commands",
+                          "type": "boolean",
+                          "description": "Activate Get commands FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_Commands_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_id_class": {
+                          "title": "Get id",
+                          "type": "boolean",
+                          "description": "Activate Get STM32 ID FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_id_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_version_class": {
+                          "title": "Get version",
+                          "type": "boolean",
+                          "description": "Activate Get FDCAN protocol version command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_version_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_memory_class": {
+                          "title": "Read memory",
+                          "type": "boolean",
+                          "description": "Activate read memory FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Memory_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "go_class": {
+                          "title": "Go",
+                          "type": "boolean",
+                          "description": "Activate Go (Jump) FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Go_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_memory_class": {
+                          "title": "Write memory",
+                          "type": "boolean",
+                          "description": "Activate write memory FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Memory_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "erase_memory_class": {
+                          "title": "Erase flash memory",
+                          "type": "boolean",
+                          "description": "Activate erase memory FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Erase_Memory_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_protect_class": {
+                          "title": "Write protect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write protect memory FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Protect_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_unprotect_class": {
+                          "title": "Write unprotect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write unprotect memory FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Unprotect_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_protect_class": {
+                          "title": "Read protect",
+                          "type": "boolean",
+                          "description": "Activate read protect memory FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_protect_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "read_unprotect_class": {
+                          "title": "Read unprotect",
+                          "type": "boolean",
+                          "description": "Activate read unprotect memory FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Unprotect_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "special_command_class": {
+                          "title": "Special",
+                          "type": "boolean",
+                          "description": "Activate special command FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Special_Command_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ext_special_command_class": {
+                          "title": "Extended special",
+                          "type": "boolean",
+                          "description": "Activate extended special command FDCAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ext_Special_Command_Fdcan",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        }
+                      }
+                    },
+                    "i3c_class": {
+                      "title": "I3C",
+                      "type": "boolean",
+                      "description": "Activate the I3C protocol on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "I3C_Protocol_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "exclude"
+                        }
+                      ]
+                    },
+                    "i3c_commands": {
+                      "type": "object",
+                      "title": "Commands",
+                      "description": "This group lets the user enable only the I3C commands required by the target product.",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core.additional.protocol_class.i3c_class"
+                        }
+                      ],
+                      "properties": {
+                        "get_commands_class": {
+                          "title": "Get commands",
+                          "type": "boolean",
+                          "description": "Activate Get commands I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_Commands_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_id_class": {
+                          "title": "Get id",
+                          "type": "boolean",
+                          "description": "Activate Get STM32 ID I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_id_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_version_class": {
+                          "title": "Get version",
+                          "type": "boolean",
+                          "description": "Activate Get I3C protocol version command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_version_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_memory_class": {
+                          "title": "Read memory",
+                          "type": "boolean",
+                          "description": "Activate read memory I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Memory_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "go_class": {
+                          "title": "Go",
+                          "type": "boolean",
+                          "description": "Activate Go (Jump) I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Go_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_memory_class": {
+                          "title": "Write memory",
+                          "type": "boolean",
+                          "description": "Activate write memory I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Memory_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "erase_memory_class": {
+                          "title": "Erase flash memory",
+                          "type": "boolean",
+                          "description": "Activate erase memory I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Erase_Memory_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_protect_class": {
+                          "title": "Write protect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write protect memory I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Protect_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_unprotect_class": {
+                          "title": "Write unprotect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write unprotect memory I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Unprotect_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_protect_class": {
+                          "title": "Read protect",
+                          "type": "boolean",
+                          "description": "Activate Read Protect I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_protect_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "read_unprotect_class": {
+                          "title": "Read unprotect",
+                          "type": "boolean",
+                          "description": "Activate Read Unprotect I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Unprotect_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "special_command_class": {
+                          "title": "Special",
+                          "type": "boolean",
+                          "description": "Activate special command I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Special_Command_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ext_special_command_class": {
+                          "title": "Extended special",
+                          "type": "boolean",
+                          "description": "Activate extended special command I3C protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ext_Special_Command_I3c",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        }
+                      }
+                    },
+                    "can_class": {
+                      "title": "CAN",
+                      "type": "boolean",
+                      "description": "Activate the CAN protocol on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "CAN_Protocol_I3c",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "exclude",
+                          "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'can')"
+                        }
+                      ]
+                    },
+                    "can_commands": {
+                      "type": "object",
+                      "title": "Commands",
+                      "description": "This group lets the user enable only the CAN commands required by the target product.",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core.additional.protocol_class.can_class"
+                        }
+                      ],
+                      "properties": {
+                        "get_commands_class": {
+                          "title": "Get commands",
+                          "type": "boolean",
+                          "description": "Activate Get commands CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_Commands_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_id_class": {
+                          "title": "Get id",
+                          "type": "boolean",
+                          "description": "Activate Get STM32 ID CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_id_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "get_version_class": {
+                          "title": "Get version",
+                          "type": "boolean",
+                          "description": "Activate Get CAN protocol version command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Get_version_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "set_speed_class": {
+                          "title": "Set speed command",
+                          "type": "boolean",
+                          "description": "Activate set speed CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Set_speed_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_memory_class": {
+                          "title": "Read memory",
+                          "type": "boolean",
+                          "description": "Activate read memory CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Memory_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "go_class": {
+                          "title": "Go",
+                          "type": "boolean",
+                          "description": "Activate Go (Jump) CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Go_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_memory_class": {
+                          "title": "Write memory",
+                          "type": "boolean",
+                          "description": "Activate write memory CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Memory_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "erase_memory_class": {
+                          "title": "Erase flash memory",
+                          "type": "boolean",
+                          "description": "Activate erase memory CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Erase_Memory_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_protect_class": {
+                          "title": "Write protect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write protect memory CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Protect_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "write_unprotect_class": {
+                          "title": "Write unprotect flash memory",
+                          "type": "boolean",
+                          "description": "Activate write unprotect memory CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Write_Unprotect_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "read_protect_class": {
+                          "title": "Read protect",
+                          "type": "boolean",
+                          "description": "Activate read protect memory CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_protect_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "read_unprotect_class": {
+                          "title": "Read unprotect",
+                          "type": "boolean",
+                          "description": "Activate read unprotect memory CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Read_Unprotect_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "special_command_class": {
+                          "title": "Special",
+                          "type": "boolean",
+                          "description": "Activate special command CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Special_Command_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "ext_special_command_class": {
+                          "title": "Extended special",
+                          "type": "boolean",
+                          "description": "Activate extended special command CAN protocol command.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Ext_Special_Command_Can",
+                              "value": true
+                            }
+                          ],
+                          "default": true
+                        }
+                      }
+                    }
+                  }
+                },
+                "memories": {
+                  "type": "object",
+                  "title": "Memories",
+                  "properties": {
+                    "flash_class": {
+                      "title": "Flash",
+                      "type": "boolean",
+                      "description": "Activate the usage of Flash memory on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Flash_Memory_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": true,
+                      "actions": [
+                        {
+                          "type": "exclude",
+                          "condition": "$get('hwPlatform.device').flash"
+                        }
+                      ]
+                    },
+                    "writable_flash_submemories": {
+                      "type": "object",
+                      "title": "Writable flash sub-memories",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core.additional.memories.flash_class"
+                        }
+                      ],
+                      "properties": {
+                        "ob_class": {
+                          "title": "Option bytes",
+                          "type": "boolean",
+                          "description": "Activate the usage of Option bytes memory on the Open Bootloader.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "OB_Memory_Class",
+                              "value": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "eeprom_class": {
+                          "title": "EEPROM",
+                          "type": "boolean",
+                          "description": "Activate the usage of EEPROM memory on the Open Bootloader.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "EEPROM_Memory_Class",
+                              "value": true
+                            }
+                          ],
+                          "default": false,
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$core.additional.memories.flash_class"
+                            }
+                          ]
+                        },
+                        "otp_class": {
+                          "title": "OTP",
+                          "type": "boolean",
+                          "description": "Activate the usage of OTP memory on the Open Bootloader.",
+                          "variables": [
+                            {
+                              "on": "update-value",
+                              "condition": "$value == true",
+                              "name": "Otp_Memory_Class",
+                              "value": true
+                            }
+                          ],
+                          "default": false,
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$core.additional.memories.flash_class"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "ram_class": {
+                      "title": "RAM",
+                      "type": "boolean",
+                      "description": "Activate the usage of RAM memory on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Ram_Memory_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": true
+                    },
+                    "engi_class": {
+                      "title": "Engineering",
+                      "type": "boolean",
+                      "description": "Engineering (ENGI) memory is a read-only memory hosting MCU configuration. Reading this memory can help customer or ST support team to know more on the part used (clock trimming, IP enabled..). The Open Bootloader allow to activate or not the usage of this area.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Engi_Memory_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "ro_class": {
+                      "title": "Read-only",
+                      "type": "boolean",
+                      "description": "Activate the usage of Read-only memory on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "RO_Memory_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "icp_class": {
+                      "title": "System",
+                      "type": "boolean",
+                      "description": "Activate the usage of System memory on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "ICP_Memory_Class",
+                          "value": true
+                        },
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Memory_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "extmem_class": {
+                      "title": "External",
+                      "type": "boolean",
+                      "description": "Activate the usage of the external memory on the Open Bootloader.",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "ExtMem_Memory_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "exclude"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "interfaces": {
+          "title": "Interfaces",
+          "type": "object",
+          "properties": {
+            "hw_interface": {
+              "title": "HW interface",
+              "type": "object",
+              "properties": {
+                "select_uart_instance": {
+                  "title": "Select USART instance",
+                  "type": "object",
+                  "objectType": "bind.peripheral.config",
+                  "description": "USART protocol can work on USART/UART or LPUART peripherals. Choose the USART/UART/LPUART instance that will be used on USART protocol.",
+                  "criteria": {
+                    "peripheralType": [
+                      "usart",
+                      "uart",
+                      "lpuart"
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'usart') || !$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'uart') || !$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'lpuart') || !$core.additional.protocol_class.usart_class"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$interfaces.hw_interface.select_uart_instance?.selection",
+                      "message": "Instance must be selected. Select an instance to fix the error"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_uart_instance.selection, 'basic/mode') !== 'async'",
+                      "message": "USART interface must be used on asynchronous mode to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/mode' must be 'async'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_uart_instance.selection, 'basic/word_length') !== '9'",
+                      "message": "USART interface must use word length equal to 9 to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/word_length' must be '9'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_uart_instance.selection, 'basic/parity') !== 'EVEN'",
+                      "message": "USART interface must use parity even mode to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/parity' must be 'EVEN'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_uart_instance.selection, 'basic/stop_bit') !== '1'",
+                      "message": "USART interface must use stop bit value equal to '1' to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/stop_bit' must be '1'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_uart_instance.selection, 'basic/direction') !== 'TX_RX'",
+                      "message": "USART interface must use both RX and TX pins directions be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/direction' must be 'TX_RX'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_uart_instance.selection, 'basic/hw_flow_ctl') !== 'NONE'",
+                      "message": "USART interface must work with no hardware flow control to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/hw_flow_ctl' must be 'NONE'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_uart_instance.selection, 'additional/set_config_auto_baud_rate') !== '0X7F_FRAME'",
+                      "message": "USART interface must work support auto-baudrate feature. To be compliant with the Open Bootloader, 0x7F frame will be used for the automatic baudrate detection. Expected value to fix the error on 'selection::additional/set_config_auto_baud_rate' must be '0X7F_FRAME'."
+                    }
+                  ]
+                },
+                "select_i2c_instance": {
+                  "title": "Select I2C instance",
+                  "type": "object",
+                  "objectType": "bind.peripheral.config",
+                  "description": "Choose the I2C peripheral instance that will be used on I2C protocol.",
+                  "criteria": {
+                    "peripheralType": [
+                      "i2c"
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'i2c') || !$core.additional.protocol_class.i2c_class"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$interfaces.hw_interface.select_i2c_instance?.selection",
+                      "message": "Instance must be selected. Select an instance to fix the error."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "(!$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_i2c_instance.selection, 'basic/speed_frequency_hz') == '100000') && (!$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_i2c_instance.selection, 'basic/speed_frequency_hz') == '400000')",
+                      "message": "I2C interface must use 100000 or 400000 speed to be compliant with the Open Bootloader as speed 1000000 is not supported. Expected value to fix the error on 'selection::basic/speed_frequency_hz' must be '100000' or '400000'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_i2c_instance.selection, 'basic/addressing_mode') != '7'",
+                      "message": "I2C interface must use 7-bit addressing mode to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/addressing_mode' must be '7'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_i2c_instance.selection, 'basic/addressing_mode') == '0'",
+                      "message": "I2C interface use a non-zero address to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/addressing_mode' must be different from '0'."
+                    }
+                  ]
+                },
+                "select_i3c_instance": {
+                  "title": "Select I3C instance",
+                  "type": "object",
+                  "objectType": "bind.peripheral.config",
+                  "description": "Choose the I3C peripheral instance that will be used on I3C protocol.",
+                  "criteria": {
+                    "peripheralType": [
+                      "i3c"
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'i3c') || !$core.additional.protocol_class.i3c_class"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$interfaces.hw_interface.select_i3c_instance?.selection",
+                      "message": "Instance must be selected. Select an instance to fix the error."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_i3c_instance.selection, 'basic/mode') != 'TGT'",
+                      "message": "I3C interface must be configured as target be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/mode' must be 'TGT'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_i3c_instance.selection, 'basic/tgt_ibi') != 'true'",
+                      "message": "I3C interface must be configured to use 'In-Band Interrupt (IBI)' feature to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/tgt_ibi' must be enabled."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_i3c_instance.selection, 'basic/ibi_config/ibi_payload') != '1_BYTE'",
+                      "message": "I3C interface must use one byte length on the IBI to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/ibi_config/ibi_payload' must be '1_BYTE'."
+                    }
+                  ]
+                },
+                "select_spi_instance": {
+                  "title": "Select SPI instance",
+                  "type": "object",
+                  "objectType": "bind.peripheral.config",
+                  "description": "Choose the SPI peripheral instance that will be used on SPI protocol.",
+                  "criteria": {
+                    "peripheralType": [
+                      "spi"
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'spi') || !$core.additional.protocol_class.spi_class"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$interfaces.hw_interface.select_spi_instance?.selection",
+                      "message": "Instance must be selected. Select an instance to fix the error."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'basic/direction') != 'FULL_DUPLEX'",
+                      "message": "SPI interface must be used on full duplex mode to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/direction' must be 'FULL_DUPLEX'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'basic/mode') != 'SLAVE'",
+                      "message": "SPI interface must be configured on slave mode to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/mode' must be 'SLAVE'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'basic/data_size/data_width') != '8'",
+                      "message": "SPI interface must use 8-bit data width communication to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/data_size/data_width' must be '8'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'basic/timing/clock_polarity') != 'LOW'",
+                      "message": "SPI interface data clock polarity must be set to low to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/timing/clock_polarity' must be 'LOW'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'basic/timing/clock_phase') != '1'",
+                      "message": "SPI interface must allow capturing data on first clock edge to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/timing/clock_phase' must be '1'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'basic/first_bit') != 'MSB_FIRST'",
+                      "message": "SPI interface must set transfer data order to MSB to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/first_bit' must be 'MSB_FIRST'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'additional/enable_ti_mode') != 'DisableTI'",
+                      "message": "SPI interface must not be set to TI mode to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::additional/enable_ti_mode' must be 'DisableTI'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'additional/set_fifo_threshold') != '1'",
+                      "message": "SPI interface must use a FIFO threshold equal to '1' to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::additional/set_fifo_threshold' must be '1'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'additional/underrun_configuration') != 'REGISTER_PATTERN'",
+                      "message": "SPI interface must enable underrun mode by sending a constant registered pattern to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::additional/underrun_configuration' must be 'REGISTER_PATTERN'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'system/nvic/enable_interrupt')",
+                      "message": "SPI interface must have its interruption enabled to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::system/nvic/enable_interrupt' must be enabled."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_spi_instance.selection, 'system/nvic/irq_handler_generation')",
+                      "message": "SPI interface native interrupt handler must not be generated to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::system/nvic/irq_handler_generation' must be disabled."
+                    }
+                  ]
+                },
+                "select_fdcan_instance": {
+                  "title": "Select FDCAN instance",
+                  "type": "object",
+                  "objectType": "bind.peripheral.config",
+                  "description": "Choose the FDCAN peripheral instance that will be used on FDCAN protocol.",
+                  "criteria": {
+                    "peripheralType": [
+                      "fdcan"
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'fdcan') || !$core.additional.protocol_class.fdcan_class"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$interfaces.hw_interface.select_fdcan_instance?.selection",
+                      "message": "Instance must be selected. Select an instance to fix the error."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_fdcan_instance.selection, 'additional/mode') != 'NORMAL'",
+                      "message": "FDCAN interface must be used on normal mode to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::additional/mode' must be 'NORMAL'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_fdcan_instance.selection, 'additional/frame_format') != 'FD_BRS'",
+                      "message": "FDCAN interface must use baudrate switch frame format to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::additional/frame_format' must be 'FD_BRS'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_fdcan_instance.selection, 'additional/tx_fifo_queue_mode') != 'FIFO'",
+                      "message": "FDCAN interface must use FIFO for its communication to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::additional/tx_fifo_queue_mode' must be 'FIFO'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_fdcan_instance.selection, 'additional/frame_filters/global_filter_config/acceptance_non_matching_ext') != 'TO_RX_FIFO_0'",
+                      "message": "FDCAN interface must use filters on FIFO0 for its communication to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::additional/frame_filters/global_filter_config/acceptance_non_matching_ext' must be 'TO_RX_FIFO_0'."
+                    }
+                  ]
+                },
+                "select_can_instance": {
+                  "title": "Select CAN instance",
+                  "type": "object",
+                  "objectType": "bind.peripheral.config",
+                  "description": "Choose the CAN peripheral instance that will be used on CAN protocol.",
+                  "criteria": {
+                    "peripheralType": [
+                      "can"
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'can') || !$core.additional.protocol_class.can_class"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$interfaces.hw_interface.select_can_instance?.selection",
+                      "message": "Instance must be selected. Select an instance to fix the error."
+                    }
+                  ]
+                },
+                "select_iwdg_instance": {
+                  "title": "Select IWDG instance",
+                  "name": "IWDG_Class",
+                  "type": "object",
+                  "objectType": "bind.peripheral.config",
+                  "description": "Open Bootloader reloads the internal watchdog (IWDG) while communication is active, please choose the IWDG instance.",
+                  "criteria": {
+                    "peripheralType": [
+                      "iwdg"
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$core.additional.protocol_class.usart_class || $core.additional.protocol_class.i2c_class || $core.additional.protocol_class.i3c_class || $core.additional.protocol_class.spi_class || $core.additional.protocol_class.fdcan_class || $core.additional.protocol_class.usb_class || $core.additional.protocol_class.can_class"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$interfaces.hw_interface.select_iwdg_instance?.selection",
+                      "message": "Instance must be selected. Select an instance to fix the error."
+                    }
+                  ]
+                },
+                "select_flash_instance": {
+                  "title": "Select Flash instance",
+                  "name": "Flash_Class",
+                  "type": "object",
+                  "objectType": "bind.peripheral.config",
+                  "description": "Open Bootloader can allow read/write and erase operations on the Flash/NVM memory, please choose the Flash/NVM instance.",
+                  "criteria": {
+                    "peripheralType": [
+                      "flash",
+                      "nvm"
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$core.additional.memories.flash_class"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$interfaces.hw_interface.select_flash_instance?.selection",
+                      "message": "Instance must be selected. Select an instance to fix the error."
+                    }
+                  ]
+                }
+              }
+            },
+            "sw_interface": {
+              "type": "object",
+              "title": "SW interface",
+              "properties": {
+                "select_usbx_instance": {
+                  "title": "USBX middleware used",
+                  "type": "string",
+                  "default": "USBX",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$core.additional.protocol_class.usb_class"
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$get('swproject.hasComponent', 'STMicroelectronics::USB:STM32CubeMX2 Config:USBX')",
+                      "message": "USBX middleware must be enabled to be used on Open Bootloader. Activate it to fix the error."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$get('sw-config.middleware-parameter-value', 'USBX', 'core/basic/device_class/dfu_class')",
+                      "message": "DFU device class must be used to be compatible with the Open Bootloader. To fix the error 'usbx::core/basic/device_class/dfu_class' must be enabled."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.middleware-parameter-value', 'USBX', 'core/basic/device_class/dfu_interface/more/dfu_media') !== 'DFU'",
+                      "message": "Descriptor must be changed to 'DFU' to compatible with Open Bootloader. To fix the error 'usbx::core/basic/device_class/dfu_interface/more/dfu_media' must be 'DFU'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.middleware-parameter-value', 'USBX', 'core/basic/device_class/device_core/more/ux_slave_request_control_max_length') !== 1024",
+                      "message": "Request control maximum length must be increased to 1024 to be compatible with the Open Bootloader. To fix the error 'usbx::core/basic/device_class/device_core/more/ux_slave_request_control_max_length' must be '1024'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.middleware-parameter-value', 'USBX', 'core/basic/device_class/device_descriptor_config/more/usbd_pid') !== 57105",
+                      "message": "USB PID must be 57105 to target DFU on the Open Bootloader. To fix the error 'usbx::core/basic/device_class/device_descriptor_config/more/usbd_pid' must be '57105'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.middleware-parameter-value', 'USBX', 'core/applicative/usbx_system_stack_size') < 2048",
+                      "message": "USBX system stack size  must be tt least 2048. To fix error 'usbx::core/applicative/usbx_system_stack_size' must be equal or more than '2048'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "!$get('sw-config.middleware-parameter-value', 'USBX', 'interfaces/logical_interface/device_controllers_enable')",
+                      "message": "The device controllers must be enabled to be used on the Open Bootloader. To fix error 'usbx::interfaces/logical_interface/device_controllers_enable' must be 'enabled'."
+                    },
+                    {
+                      "type": "error",
+                      "condition": "$get('sw-config.peripheral-parameter-value', $get('sw-config.middleware-parameter-value', 'USBX', 'interfaces/resources_allocation/select_the_device_instance/selection'), 'basic/pma_settings/1/direction') != 'OUT'",
+                      "message": "Please add item to packet memory area endpoint. To fix error 'usb_hardware::basic/pma_settings/1/direction' must be enabled and configured as output."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

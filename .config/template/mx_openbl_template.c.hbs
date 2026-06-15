@@ -1,0 +1,85 @@
+{{assign "OpenBLFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "OpenBootloader"}')~}}
+{{assign 'OpenBL_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.OpenBLFilter)~}}
+{{assign 'OpenBL_ctx' @root.OpenBL_context.[0].settings.parameters~}}
+{{!
+/**
+  ******************************************************************************
+  * @file    mx_openbl_template.c
+  * @author  MCD Application Team
+  * @brief   Open Bootloader application entry point
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2026 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+~}}
+/**
+  ******************************************************************************
+  * @file    mx_openbl.c
+  * @brief   Open Bootloader application entry point
+{{> LICENSE}}
+
+{{#with @root.OpenBL_ctx~}}
+/* Includes ------------------------------------------------------------------*/
+#include "mx_openbl.h"
+#include "mx_openbl_user.h"
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+static openbl_obj_t OpenBootloaderObj;
+
+/* Exported variables --------------------------------------------------------*/
+/* Private function prototypes -----------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
+
+/**
+ * @brief  This function is used to initialize the Open Bootloader.
+ * @retval Returns OPENBL_SUCCESS if initialization is successful, otherwise returns OPENBL_ERROR.
+ */
+openbl_status_t mx_openbl_init(void)
+{
+  openbl_status_t return_status = OPENBL_SUCCESS;
+
+  /* Initialize interfaces */
+  if (OPENBL_Init(&OpenBootloaderObj) != OPENBL_SUCCESS)
+  {
+    return_status = OPENBL_ERROR;
+  }
+
+  return return_status;
+}
+
+/**
+ * @brief  This function is used to process the Open Bootloader interfaces communication.
+ * @retval Returns @arg OPENBL_SUCCESS if processing is successful, otherwise returns @arg OPENBL_ERROR.
+ */
+openbl_status_t mx_openbl_process(void)
+{
+  openbl_status_t return_status = OPENBL_SUCCESS;
+
+  if (openbl_user_process_communication(&OpenBootloaderObj) != 0)
+  {
+    return_status = OPENBL_ERROR;
+  }
+
+  return return_status;
+}
+
+/**
+ * @brief  This function is used to get the type of the detected interface.
+ * @retval Returns the type of the detected interface, otherwise returns @arg OPENBL_ITF_TYPE_NONE.
+ */
+uint32_t mx_openbl_get_detected_itf(void)
+{
+  return OPENBL_GetTypeOfDetectedInterface(&OpenBootloaderObj);
+}
+{{/with}}

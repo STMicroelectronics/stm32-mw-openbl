@@ -1,0 +1,105 @@
+{{assign "OpenBLFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "OpenBootloader"}')~}}
+{{assign 'OpenBL_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.OpenBLFilter)~}}
+{{assign 'OpenBL_ctx' @root.OpenBL_context.[0].settings.parameters~}}
+{{!
+/**
+  ******************************************************************************
+  * @file    openbl_conf_template.h
+  * @author  MCD Application Team
+  * @brief   Contains Open Bootloader configuration
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2026 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+~}}
+/**
+  ******************************************************************************
+  * @file    openbl_conf.h
+  * @brief   Contains Open Bootloader configuration
+{{> LICENSE}}
+
+{{#with @root.OpenBL_ctx~}}
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef OPENBL_CONF_H
+#define OPENBL_CONF_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* Includes ------------------------------------------------------------------*/
+#include "stm32_hal.h"
+#include "openbl_hw_defs.h"
+
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+#define OPENBL_MEM_AREA_ERROR             0x0U      /* Error Address Area */
+#define OPENBL_FLASH_AREA                 0x1U      /* Flash Address Area */
+#define OPENBL_RAM_AREA                   0x2U      /* RAM Address area */
+#define OPENBL_OB_AREA                    0x3U      /* Option bytes Address area */
+#define OPENBL_OTP_AREA                   0x4U      /* OTP Address area */
+#define OPENBL_ICP_AREA                   0x5U      /* System memory area */
+#define OPENBL_EB_AREA                    0x6U      /* Engi bytes Address area */
+#define OPENBL_RO_AREA                    0x7U      /* Read-only area */
+#define OPENBL_EEPROM_AREA                0x8U      /* EEPROM area */
+
+/*-------------------------- Definitions for interfaces --------------------- */
+{{#if (@root.EnvVarAPI.getVariableValue 'USB_Protocol_Class')}}
+#define OPENBL_ITF_USB_ENABLE             0x1U      /* Enable USB interface */
+{{/if}}
+
+#define OPENBL_ITF_TYPE_NONE              0x0U
+#define OPENBL_ITF_TYPE_USART             0x1U
+#define OPENBL_ITF_TYPE_I2C               0x2U
+#define OPENBL_ITF_TYPE_I3C               0x3U
+#define OPENBL_ITF_TYPE_SPI               0x4U
+#define OPENBL_ITF_TYPE_FDCAN             0x5U
+#define OPENBL_ITF_TYPE_USB               0x6U
+
+#define OPENBL_INTERFACES_NUMBER          5U        /* Maximum number of supported interfaces */
+#define OPENBL_MEMORIES_NUMBER            11U       /* Maximum number of supported memories */
+
+{{#if (@root.EnvVarAPI.getVariableValue 'USART_Protocol_Class')}}
+#define OPENBL_USART_COMMANDS_MAX_NBR     13U       /* USART maximum number of supported commands */
+#define OPENBL_USART_RAM_BUFFER_SIZE      1164U     /* Size of USART buffer used to store received data from the host */
+{{/if}}
+
+{{#if (@root.EnvVarAPI.getVariableValue 'USB_Protocol_Class')}}
+#define OPENBL_USB_RAM_BUFFER_SIZE        20U       /* Size of USB buffer used to store received data from the host */
+{{/if}}
+
+{{#if (@root.EnvVarAPI.getVariableValue 'SPI_Protocol_Class')}}
+#define OPENBL_SPI_COMMANDS_MAX_NBR       13U       /* SPI maximum number of supported commands */
+#define OPENBL_SPI_RAM_BUFFER_SIZE        1164U     /* Size of SPI buffer used to store received data from the host */
+{{/if}}
+
+{{#if (@root.EnvVarAPI.getVariableValue 'I2C_Protocol_Class')}}
+#define OPENBL_I2C_COMMANDS_MAX_NBR       14U       /* I2C maximum number of supported commands */
+#define OPENBL_I2C_RAM_BUFFER_SIZE        1164U     /* Size of I2C buffer used to store received data from the host */
+
+#define OPENBL_I2C_TIMEOUT                0x1F4000U /* I2C timeout used to detect communication failure */
+{{/if}}
+
+/*----------------------- Definitions for special commands ------------------ */
+#define OPENBL_SPECIAL_CMD_SIZE_BUFFER1   128U      /* Special command buffer 1 size */
+#define OPENBL_SPECIAL_CMD_SIZE_BUFFER2   1024U     /* Special command buffer 2 size */
+#define OPENBL_SPECIAL_CMD_MAX_NBR        0x01U     /* Special command maximum number of commands */
+#define OPENBL_EXT_SPECIAL_CMD_MAX_NBR    0x01U     /* Extended special command maximum number of commands */
+#define OPENBL_SPECIAL_CMD_DEFAULT        0x0102U   /* Default special command used just as example */
+
+/* Exported macro ------------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* OPENBL_CONF_H */
+{{/with}}

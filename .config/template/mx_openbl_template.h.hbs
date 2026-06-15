@@ -1,0 +1,52 @@
+{{assign "OpenBLFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "OpenBootloader"}')~}}
+{{assign 'OpenBL_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.OpenBLFilter)~}}
+{{assign 'OpenBL_ctx' @root.OpenBL_context.[0].settings.parameters~}}
+{{!
+/**
+  ******************************************************************************
+  * file: mx_openbl_template.h
+  * brief: Header for mx_openbl.c
+  ******************************************************************************
+  *
+  * Copyright (c) 2026 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+~}}
+/**
+  ******************************************************************************
+  * @file    mx_openbl.h
+  * @brief   Header for mx_openbl.c
+{{> LICENSE}}
+
+{{#with @root.OpenBL_ctx~}}
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef MX_OPENBL_H
+#define MX_OPENBL_H
+
+/* Includes ------------------------------------------------------------------*/
+#include "openbl_types.h"
+
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+/* Exported macros -----------------------------------------------------------*/
+/* Exported functions ------------------------------------------------------- */
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+openbl_status_t mx_openbl_init(void);
+openbl_status_t mx_openbl_process(void);
+uint32_t mx_openbl_get_detected_itf(void);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* MX_OPENBL_H */
+{{/with}}

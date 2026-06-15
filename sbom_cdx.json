@@ -1,0 +1,89 @@
+{
+    "bomFormat": "CycloneDX",
+    "specVersion": "1.5",
+    "serialNumber": "urn:uuid:5642f4ec-23a7-4c87-9378-0eeaf7067619",
+    "version": 1,
+    "metadata": {
+        "timestamp": "2026-06-05T10:37:14Z",
+        "tools": [
+            {
+                "vendor": "Black Duck",
+                "name": "Hub",
+                "version": "2026.1.1"
+            },
+            {
+                "vendor": "CycloneDX",
+                "name": "cyclonedx-core-java",
+                "version": "5.0.5"
+            }
+        ],
+        "authors": [
+            {
+                "name": "STMicroelectronics NV"
+            }
+        ],
+        "component": {
+            "type": "application",
+            "bom-ref": "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6",
+            "name": "Open_Bootloader",
+            "version": "7.0.0",
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Ultimate Liberty license (SLA0044)"
+                    }
+                }
+            ],
+            "pedigree": {
+                "notes": "Ultimate Liberty license (SLA0044)"
+            },
+            "properties": [
+                {
+                    "name": "BlackDuck-Component",
+                    "value": "89fa8d52-7990-4d6d-a22b-08a214555789"
+                },
+                {
+                    "name": "BlackDuck-ComponentVersion",
+                    "value": "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6"
+                }
+            ]
+        }
+    },
+    "components": [
+        {
+            "type": "library",
+            "bom-ref": "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6---b127a31e-b97c-45d6-971e-bf351a8ff4c3",
+            "author": "STMicroelectronics",
+            "name": "Open_Bootloader",
+            "version": "7.0.0",
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Ultimate Liberty license (SLA0044)"
+                    }
+                }
+            ],
+            "pedigree": {
+                "notes": "Ultimate Liberty license (SLA0044)"
+            },
+            "properties": [
+                {
+                    "name": "BlackDuck-Component",
+                    "value": "284636f1-8bd1-46af-a731-e44455858498"
+                },
+                {
+                    "name": "BlackDuck-ComponentVersion",
+                    "value": "b127a31e-b97c-45d6-971e-bf351a8ff4c3"
+                }
+            ]
+        }
+    ],
+    "dependencies": [
+        {
+            "ref": "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6",
+            "dependsOn": [
+                "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6---b127a31e-b97c-45d6-971e-bf351a8ff4c3"
+            ]
+        }
+    ]
+}

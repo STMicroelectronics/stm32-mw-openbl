@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stm32="https://developer.st.com/schemas/stm32cube/1.0.0" schemaVersion="1.7.55" xsi:noNamespaceSchemaLocation="PACK.xsd" xsi:schemaLocation="https://developer.st.com/schemas/stm32cube/1.0.0 stm32cube.xsd" Dvendor="STMicroelectronics:13" Dname="STM32*">
+  <vendor>STMicroelectronics</vendor>
+  <name>open_bootloader</name>
+  <environments>
+    <environment name="STM32Cube">
+      <stm32:pack type="MW" friendlyName="open_bootloader" shortDesc="OpenBootloader Middleware">
+        <relocation-info parent="middleware" layer="" element=""/>
+        <compatibility>
+          <release version="7.0.0">
+            <applicable-schema schemaType="sw-configuration" schemaVersion="3.8.0"/>
+            <applicable-api-group apiType="codegen-getters">
+              <applicable-api apiType="clockAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="DmaAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="EnvVarAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="ExtiAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="hwPlatformAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="NvicAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="peripheralsResourceManagerAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="pinoutAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="SWConfigurationAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="SWProjectAPI" apiVersion="1.0.0"/>
+            </applicable-api-group>
+          </release>
+        </compatibility>
+      </stm32:pack>
+    </environment>
+  </environments>
+  <ECCN>
+    <ECCN-EU>NEC</ECCN-EU>
+    <ECCN-US>EAR99</ECCN-US>
+  </ECCN>
+  <description>OpenBootloader CMSIS pack</description>
+  <url>https://developer.st.com/st-pack-server/api/v1/pack/</url>
+  <repository type="git"/>
+  <license>LICENSE.md</license>
+  <releases>
+    <release date="2026-06-03" version="7.0.0">
+         OpenBootloader pack version based on the 7.0.0 Release
+         ## Main changes
+         * Official release of OpenBootloader aligned with HAL2.
+    </release>
+  </releases>
+  <changelogs>
+    <changelog id="Readme" name="README.md"/>
+    <changelog id="Release Notes" default="true" name="Release_Notes.html"/>
+  </changelogs>
+  <keywords>
+    <keyword>ST</keyword>
+    <keyword>STMicroelectronics</keyword>
+    <keyword>Cortex M</keyword>
+    <keyword>Middleware</keyword>
+    <keyword>Bootloader</keyword>
+    <keyword>OpenBootloader</keyword>
+  </keywords>
+  <conditions>
+    <condition id="OpenBL_C5">
+      <description>Open Bootloader ready to use files on STM2C5</description>
+      <require Dvendor="STMicroelectronics:13" Dname="STM32C5*"/>
+    </condition>
+    <condition id="Use USART">
+    </condition>
+    <condition id="Use I2C">
+    </condition>
+    <condition id="Use SPI">
+    </condition>
+    <condition id="Use USB">
+    </condition>
+    <condition id="Use FLASH">
+    </condition>
+    <condition id="Use RAM">
+    </condition>
+    <condition id="Use OB">
+    </condition>
+    <condition id="Use EEPROM">
+    </condition>
+    <condition id="Use OTP">
+    </condition>
+    <condition id="Use ENGI">
+    </condition>
+    <condition id="Use RO">
+    </condition>
+    <condition id="Use ICP">
+    </condition>
+    <condition id="Use EXTMEM">
+    </condition>
+    <condition id="Use IWDG">
+    </condition>
+    <condition id="Use full features">
+      <description>OpenBootloader global configuration :dependency to different files</description>
+      <require condition="Use USART"/>
+      <require condition="Use I2C"/>
+      <require condition="Use SPI"/>
+      <require condition="Use USB"/>
+      <require condition="Use FLASH"/>
+      <require condition="Use RAM"/>
+      <require condition="Use OB"/>
+      <require condition="Use EEPROM"/>
+      <require condition="Use OTP"/>
+      <require condition="Use ENGI"/>
+      <require condition="Use RO"/>
+      <require condition="Use ICP"/>
+      <require condition="Use EXTMEM"/>
+      <require condition="Use IWDG"/>
+      <require Cclass="BOOTLOADER" Cgroup="OpenBootloader Core" Csub="Common"/>
+      <require Cclass="BOOTLOADER" Cgroup="OpenBootloader Interface" Csub="Interface"/>
+    </condition>
+  </conditions>
+  <!-- This generator is launched if any component referencing this generator by 'id' is selected and the specified <gpdsc> file does not exist -->
+  <generators>
+    <!-- This generator is launched if any component referencing this generator by 'id' is selected and the specified <gpdsc> file does not exist -->
+    <generator id="openbootloader_mx2codegen">
+      <description>STMicroelectronics: STM32Cube Code Generator for OpenBootloader Pack</description>
+      <exe>
+        <command host="win">.config/gen_code.bat</command>
+        <command host="linux">.config/gen_code.sh</command>
+        <command host="mac">.config/gen_code.sh</command>
+        <!-- #name of the gpdsc template contained in this PACK and aligned with GPDSC name-->
+        <argument>STMicroelectronics.open_bootloader.gpdsc.hbs</argument>
+        <!-- passing the generator name-->
+        <argument>openbootloader_mx2codegen</argument>
+        <argument>$G</argument>
+        <!-- Flag to indicate that this Generator is dry-run capable  -->
+        <argument mode="dry-run">--dry-run</argument>
+      </exe>
+      <!-- workingDir></workingDir -->
+      <!-- path is specified either absolute or relative to PDSC or GPDSC file. If not specified it is the project directory configured by the environment -->
+      <gpdsc name="$P/STMicroelectronics.open_bootloader.gpdsc"/>
+    </generator>
+  </generators>
+  <!-- end of codegen -->
+  <!-- START: STMicroelectronics MW OPENBOOTLOADER -->
+  <components>
+    <!-- STM32 OpenBootloader Core -->
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader Core" Csub="Common" Cversion="7.0.0">
+      <description>OpenBootloader Core</description>
+      <files>
+        <file category="doc" name="Release_Notes.md"/>
+        <file category="doc" name="Release_Notes.html"/>
+        <file category="doc" name="SW_Security_Level.md"/>
+        <file category="doc" name="README.md"/>
+        <!-- OpenBootloader core source files -->
+        <file category="source" name="core/openbl_core.c"/>
+        <!-- OpenBootloader core header files -->
+        <file category="header" name="core/openbl_commands.h"/>
+        <file category="header" name="core/openbl_core.h"/>
+        <file category="header" name="core/openbl_types.h"/>
+        <file category="header" name="core/openbl_interfaces.h"/>
+        <!-- OpenBootloader memories module source/header files -->
+        <file category="source" name="modules/mem/openbl_mem.c"/>
+        <file category="source" name="modules/mem/openbl_mem.h"/>
+        <file category="include" name="modules/"/>
+        <file category="include" name="modules/mem/"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader Interface" Csub="Interface" Cversion="7.0.0">
+      <description>OpenBootloader Interface</description>
+      <files>
+        <!-- OpenBootloader interface source/header files -->
+        <file category="source" name="interfaces/openbl_itf_common.c"/>
+        <file category="source" name="interfaces/openbl_itf_common.h"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_common.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_hw_defs.h" condition="OpenBL_C5"/>
+        <file category="include" name="interfaces/"/>
+        <file category="include" name="interfaces/stm32c5xx/" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader USART Module" Csub="USART_Module" Cversion="7.0.0" condition="Use USART">
+      <description>OpenBootloader USART Module</description>
+      <files>
+        <!-- OpenBootloader usart module source/header files -->
+        <file category="source" name="modules/usart/openbl_usart_cmd.c"/>
+        <file category="source" name="modules/usart/openbl_usart_cmd.h"/>
+        <file category="include" name="modules/usart/"/>
+        <!-- OpenBootloader usart interfaces source/header files -->
+        <file category="source" name="interfaces/openbl_itf_usart.c"/>
+        <file category="source" name="interfaces/openbl_itf_usart.h"/>
+        <!-- OpenBootloader USART C5 files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_usart.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader I2C Module" Csub="I2C_Module" Cversion="7.0.0" condition="Use I2C">
+      <description>OpenBootloader I2C Module</description>
+      <files>
+        <!-- OpenBootloader i2c module source files -->
+        <file category="source" name="modules/i2c/openbl_i2c_cmd.c"/>
+        <file category="source" name="modules/i2c/openbl_i2c_cmd.h"/>
+        <file category="include" name="modules/i2c/"/>
+        <!-- OpenBootloader i2c interfaces source/header files -->
+        <file category="source" name="interfaces/openbl_itf_i2c.c"/>
+        <file category="source" name="interfaces/openbl_itf_i2c.h"/>
+        <!-- OpenBootloader I2C C5 files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_i2c.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader SPI Module" Csub="SPI_Module" Cversion="7.0.0" condition="Use SPI">
+      <description>OpenBootloader SPI Module</description>
+      <files>
+        <!-- OpenBootloader spi module source files -->
+        <file category="source" name="modules/spi/openbl_spi_cmd.c"/>
+        <!-- OpenBootloader spi module header files -->
+        <file category="source" name="modules/spi/openbl_spi_cmd.h"/>
+        <file category="include" name="modules/spi/"/>
+        <!-- OpenBootloader SPI C5 files -->
+        <file category="source" name="interfaces/openbl_itf_spi.c"/>
+        <file category="source" name="interfaces/openbl_itf_spi.h"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_spi.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader USB Module" Csub="USB_Module" Cversion="7.0.0" condition="Use USB">
+      <description>OpenBootloader USB Module</description>
+      <files>
+        <!-- OpenBootloader usb module source files -->
+        <file category="source" name="modules/usb/openbl_usb_cmd.c"/>
+        <!-- OpenBootloader usb module header files -->
+        <file category="source" name="modules/usb/openbl_usb_cmd.h"/>
+        <file category="include" name="modules/usb/"/>
+        <!-- OpenBootloader USB C5 files -->
+        <file category="source" name="interfaces/openbl_itf_usb.c"/>
+        <file category="source" name="interfaces/openbl_itf_usb.h"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_usb_dfu.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_usb_dfu.h" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_usb_dfu_descriptors.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_usb_dfu_descriptors.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader Flash Module" Csub="Flash_Module" Cversion="7.0.0" condition="Use FLASH">
+      <description>OpenBootloader Flash Module</description>
+      <files>
+        <!-- OpenBootloader can module source/header files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_flash.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_flash.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader Ram Module" Csub="Ram_Module" Cversion="7.0.0" condition="Use RAM">
+      <description>OpenBootloader RAM Module</description>
+      <files>
+        <!-- OpenBootloader can module source/header files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_ram.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_ram.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader OB Module" Csub="OB_Module" Cversion="7.0.0" condition="Use OB">
+      <description>OpenBootloader Option Bytes Module</description>
+      <files>
+        <!-- OpenBootloader can module source/header files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_optionbytes.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_optionbytes.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader OTP Module" Csub="OTP_Module" Cversion="7.0.0" condition="Use OTP">
+      <description>OpenBootloader OTP Module</description>
+      <files>
+        <!-- OpenBootloader can module source/header files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_otp.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_otp.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader EEPROM Module" Csub="EEPROM_Module" Cversion="7.0.0" condition="Use EEPROM">
+      <description>OpenBootloader EEPROM Module</description>
+      <files>
+        <!-- OpenBootloader can module source/header files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_eeprom.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_eeprom.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader ENGI Bytes Module" Csub="ENGI_Module" Cversion="7.0.0" condition="Use ENGI">
+      <description>OpenBootloader ENGI Module</description>
+      <files>
+        <!-- OpenBootloader can module source/header files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_engibytes.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_engibytes.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader RO Bytes Module" Csub="RO_Module" Cversion="7.0.0" condition="Use RO">
+      <description>OpenBootloader ReadOnly bytes Module</description>
+      <files>
+        <!-- OpenBootloader can module source/header files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_read_only.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_read_only.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader ICP Module" Csub="ICP_Module" Cversion="7.0.0" condition="Use ICP">
+      <description>OpenBootloader System Memory Module</description>
+      <files>
+        <!-- OpenBootloader can module source/header files -->
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_systemmemory.c" condition="OpenBL_C5"/>
+        <file category="source" name="interfaces/stm32c5xx/openbl_itf_systemmemory.h" condition="OpenBL_C5"/>
+      </files>
+    </component>
+    <component Cclass="BOOTLOADER" Cgroup="OpenBootloader IWDG Module" Csub="IWDG_Module" Cversion="7.0.0" condition="Use IWDG">
+      <description>OpenBootloader IWDG Module</description>
+      <files>
+        <!-- OpenBootloader can module source/header files -->
+        <file category="source" name="interfaces/openbl_itf_iwdg.c"/>
+        <file category="source" name="interfaces/openbl_itf_iwdg.h"/>
+      </files>
+    </component>
+    <!--</components> -->
+    <!-- END: STMicroelectronics MW OPENBOOTLOADER -->
+    <!-- START: STMicroelectronics MW OPENBOOTLOADER CODE GEN -->
+    <component generator="openbootloader_mx2codegen" Cclass="BOOTLOADER" Cgroup="STM32CubeMX2 Config" Csub="OpenBootloader" Cversion="7.0.0" condition="Use full features">
+      <description>STMicroelectronics: STM32Cube Configuration Code Generation for OpenBootloader</description>
+      <environments>
+        <environment name="STM32Cube">
+          <stm32:component>
+            <middleware-entry-point id="Open_Bootloader" name="OpenBootloader" category="Bootloader"/>
+          </stm32:component>
+        </environment>
+      </environments>
+      <files>
+        <file category="genAsset" name=".config/gen_code.bat"/>
+        <file category="genAsset" name=".config/gen_code.sh"/>
+        <file category="genAsset" name=".config/STMicroelectronics.open_bootloader.gpdsc.hbs"/>
+        <file category="genAsset" name=".config/openbootloader_config_parameters.json"/>
+        <file category="genAsset" name=".config/template/mx_openbl_user_template.c.hbs"/>
+        <file category="genAsset" name=".config/template/mx_openbl_user_template.h.hbs"/>
+        <file category="genAsset" name=".config/template/openbl_conf_template.h.hbs"/>
+        <file category="genAsset" name=".config/template/mx_openbl_template.c.hbs"/>
+        <file category="genAsset" name=".config/template/mx_openbl_template.h.hbs"/>
+        <file category="genAsset" name=".config/template/license/mx_open_bootloader_license_template.md.hbs"/>
+        <file category="genAsset" name=".config/template/helpers/openbootloader_helpers.js"/>
+        <file category="genAsset" name=".config/template/partials/LICENSE_partial.hbs"/>
+      </files>
+    </component>
+  </components>
+</package>

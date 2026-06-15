@@ -1,0 +1,110 @@
+{{assign "OpenBLFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "OpenBootloader"}')~}}
+{{assign 'OpenBL_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.OpenBLFilter)~}}
+{{assign 'OpenBL_ctx' @root.OpenBL_context.[0].settings.parameters~}}
+{{!
+/**
+  ******************************************************************************
+  * @file    mx_openbl_user_template.h
+  * @author  MCD Application Team
+  * @brief   Header for mx_openbl_user.c module
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2026 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+~}}
+/**
+  ******************************************************************************
+  * @file    mx_openbl_user.h
+  * @brief   Header for mx_openbl_user.c module
+{{> LICENSE}}
+
+{{#with @root.OpenBL_ctx~}}
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef MX_OPENBL_USER_H
+#define MX_OPENBL_USER_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* Includes ------------------------------------------------------------------*/
+#include "openbl_core.h"
+
+{{#if (@root.EnvVarAPI.getVariableValue 'HAL_IWDG_PROJECT_USE_HAL')}}
+{{#with interfaces.hw_interface}}
+#include "mx_{{lowercase select_iwdg_instance.selection}}.h"
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+{{#if (@root.EnvVarAPI.getVariableValue 'USART_Protocol_Class')}}
+{{#with interfaces.hw_interface}}
+#include "mx_{{lowercase select_uart_instance.selection}}.h"
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+{{#if (@root.EnvVarAPI.getVariableValue 'I2C_Protocol_Class')}}
+{{#with interfaces.hw_interface}}
+#include "mx_{{lowercase select_i2c_instance.selection}}.h"
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+{{#if (@root.EnvVarAPI.getVariableValue 'SPI_Protocol_Class')}}
+{{#with interfaces.hw_interface}}
+#include "mx_{{lowercase select_spi_instance.selection}}.h"
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+{{#if (@root.EnvVarAPI.getVariableValue 'Flash_Memory_Class')}}
+{{#with interfaces.hw_interface}}
+#include "mx_{{lowercase select_flash_instance.selection}}.h"
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+
+/* Exported types ------------------------------------------------------------*/
+#define OPENBL_STACK_SIZE              0x8C00U   /* RAM used by the Open Bootloader stack */
+
+/* Exported constants --------------------------------------------------------*/
+{{#if (@root.EnvVarAPI.getVariableValue 'USART_Protocol_Class')}}
+{{#with interfaces.hw_interface}}
+#define OPENBL_USART_ITF               {{uppercase select_uart_instance.selection}}
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+{{#if (@root.EnvVarAPI.getVariableValue 'I2C_Protocol_Class')}}
+{{#with interfaces.hw_interface}}
+#define OPENBL_I2C_ITF                 {{uppercase select_i2c_instance.selection}}
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+{{#if (@root.EnvVarAPI.getVariableValue 'SPI_Protocol_Class')}}
+{{#with interfaces.hw_interface}}
+#define OPENBL_SPI_ITF                 {{uppercase select_spi_instance.selection}}
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+{{#if (@root.EnvVarAPI.getVariableValue 'Flash_Memory_Class')}}
+{{#with interfaces.hw_interface}}
+#define OPENBL_FLASH_ITF               mx_{{lowercase select_flash_instance.selection}}_gethandle()
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+{{#if (@root.EnvVarAPI.getVariableValue 'HAL_IWDG_PROJECT_USE_HAL')}}
+#define OPENBL_SYS_IWDG                IWDG
+{{/if}}
+
+/* Exported macro ------------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
+int32_t openbl_user_process_communication(openbl_obj_t *p_openbl_obj);
+{{#if (@root.EnvVarAPI.getVariableValue 'SPI_Protocol_Class')}}
+{{#with interfaces.hw_interface}}
+void {{uppercase select_spi_instance.selection}}_IRQHandler(void);
+{{/with~}} {{!-- interfaces.hw_interface --}}
+{{/if}}
+
+/* External variables --------------------------------------------------------*/
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* MX_OPENBL_USER_H */
+{{/with}}
