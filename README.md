@@ -1,6 +1,8 @@
 # Middleware Open Bootloader MCU Component
 
-![latest tag](https://img.shields.io/github/v/tag/STMicroelectronics/stm32-mw-openbl.svg?color=brightgreen)
+![tag](https://img.shields.io/badge/tag-STM32N6_v1.0.2-brightgreen.svg)
+[![release note](https://img.shields.io/badge/release_note-view_html-gold.svg)](https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/stm32n6/Release_Notes.html)
+[![offer](https://img.shields.io/badge/stm32cube_mcu_offer-browse-orange.svg)](https://github.com/STMicroelectronics/STM32Cube_MCU_Overall_Offer)
 
 ## Overview
 
@@ -61,16 +63,8 @@ All STM32 System Bootloader commands can be supported by Open Bootloader, which 
 
 ## How to use
 
-**Open Bootloader** examples showing how to use this library are available in dedicated repositories, the list of which can be found [here](https://github.com/STMicroelectronics/STM32Cube_MCU_Overall_Offer/blob/master/README.md#stm32cube-middleware-libraries).
+**Open Bootloader** examples showing how to use this library are available in dedicated repositories, the list of which can be found via the _STM32Cube MCU Offer_ **badge** above.
 
-## Description
-
-This **stm32-mw-openbl** MCU component repository is one element **common to all** STM32Cube MCU packages, providing the **Open Bootloader MCU Middleware** part.
-
-## Release note
-
-Details about the content of this release are available in the release note [here](https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/stm32n6/Release_Notes.html).
-
-## Troubleshooting
+## Feedback and contributions
 
 Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) guide.
