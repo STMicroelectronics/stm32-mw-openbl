@@ -1,15 +1,15 @@
 {
     "bomFormat": "CycloneDX",
     "specVersion": "1.5",
-    "serialNumber": "urn:uuid:5642f4ec-23a7-4c87-9378-0eeaf7067619",
+    "serialNumber": "urn:uuid:aef17134-daa9-47ff-8f9c-12af1757164e",
     "version": 1,
     "metadata": {
-        "timestamp": "2026-06-05T10:37:14Z",
+        "timestamp": "2026-09-11T10:52:02Z",
         "tools": [
             {
                 "vendor": "Black Duck",
                 "name": "Hub",
-                "version": "2026.1.1"
+                "version": "2026.7.0"
             },
             {
                 "vendor": "CycloneDX",
@@ -24,9 +24,9 @@
         ],
         "component": {
             "type": "application",
-            "bom-ref": "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6",
+            "bom-ref": "004fd8d2-a47f-445d-b5bd-2ebbdda56797",
             "name": "Open_Bootloader",
-            "version": "7.0.0",
+            "version": "7.1.0",
             "licenses": [
                 {
                     "license": {
@@ -44,18 +44,21 @@
                 },
                 {
                     "name": "BlackDuck-ComponentVersion",
-                    "value": "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6"
+                    "value": "004fd8d2-a47f-445d-b5bd-2ebbdda56797"
                 }
             ]
+        },
+        "supplier": {
+            "name": "STMicroelectronics NV"
         }
     },
     "components": [
         {
             "type": "library",
-            "bom-ref": "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6---b127a31e-b97c-45d6-971e-bf351a8ff4c3",
+            "bom-ref": "004fd8d2-a47f-445d-b5bd-2ebbdda56797---0a1ab995-9354-4e43-9f71-d70a2a599d46",
             "author": "STMicroelectronics",
             "name": "Open_Bootloader",
-            "version": "7.0.0",
+            "version": "7.1.0",
             "licenses": [
                 {
                     "license": {
@@ -73,16 +76,16 @@
                 },
                 {
                     "name": "BlackDuck-ComponentVersion",
-                    "value": "b127a31e-b97c-45d6-971e-bf351a8ff4c3"
+                    "value": "0a1ab995-9354-4e43-9f71-d70a2a599d46"
                 }
             ]
         }
     ],
     "dependencies": [
         {
-            "ref": "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6",
+            "ref": "004fd8d2-a47f-445d-b5bd-2ebbdda56797",
             "dependsOn": [
-                "d7f9ec45-6a7d-4f81-88be-e4328ffc74a6---b127a31e-b97c-45d6-971e-bf351a8ff4c3"
+                "004fd8d2-a47f-445d-b5bd-2ebbdda56797---0a1ab995-9354-4e43-9f71-d70a2a599d46"
             ]
         }
     ]

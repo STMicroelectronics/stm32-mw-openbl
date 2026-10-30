@@ -47,7 +47,17 @@ uint8_t *OPENBL_USB_Desc_GetStringFramework(ULONG *Length);
 #define OPENBL_USBD_STRING_SERIAL_SIZE                0x1AU
 
 #define OPENBL_USBD_DFU_STRING_FLASH_DESC_INDEX       0x06U
+#if (defined (STM32C531xx) || defined (STM32C532xx) || defined (STM32C542xx))
+#define OPENBL_USBD_DFU_STRING_FLASH_DESC             "@Internal Flash /0x08000000/32*08Kg"
+#endif /* End of STM32C531xx || STM32C532xx || STM32C542xx */
+
+#if (defined (STM32C551xx) || defined (STM32C552xx) || defined (STM32C562xx))
 #define OPENBL_USBD_DFU_STRING_FLASH_DESC             "@Internal Flash /0x08000000/64*08Kg"
+#endif /* End of STM32C551xx || STM32C552xx || STM32C562xx */
+
+#if (defined (STM32C591xx) || defined (STM32C593xx) || defined (STM32C5A3xx))
+#define OPENBL_USBD_DFU_STRING_FLASH_DESC             "@Internal Flash /0x08000000/128*08Kg"
+#endif /* End of STM32C591xx || STM32C593xx || STM32C5A3xx */
 
 #define OPENBL_USBD_DFU_STRING_OB_DESC_INDEX          0x07U
 #define OPENBL_USBD_DFU_STRING_OB_DESC                "@Option Bytes /0x40022050/01*432e"
@@ -62,7 +72,18 @@ uint8_t *OPENBL_USB_Desc_GetStringFramework(ULONG *Length);
 #define OPENBL_USBD_DFU_STRING_ENGI_DESC              "@ENGI Memory /0x40022400/01*01Kg"
 
 #define OPENBL_USBD_DFU_STRING_DEVICE_ID_DESC_INDEX   0x14U
+
+#if (defined (STM32C531xx) || defined (STM32C532xx) || defined (STM32C542xx))
+#define OPENBL_USBD_DFU_STRING_DEVICE_ID_DESC         "@Device ID/0x44F,@Revision ID/0x0001"
+#endif /* End of STM32C531xx || STM32C532xx || STM32C542xx */
+
+#if (defined (STM32C551xx) || defined (STM32C552xx) || defined (STM32C562xx))
 #define OPENBL_USBD_DFU_STRING_DEVICE_ID_DESC         "@Device ID/0x44E,@Revision ID/0x0001"
+#endif /* End of STM32C551xx || STM32C552xx || STM32C562xx */
+
+#if (defined (STM32C591xx) || defined (STM32C593xx) || defined (STM32C5A3xx))
+#define OPENBL_USBD_DFU_STRING_DEVICE_ID_DESC         "@Device ID/0x45A,@Revision ID/0x0001"
+#endif /* End of STM32C591xx || STM32C593xx || STM32C5A3xx */
 
 /* Private macro -----------------------------------------------------------*/
 

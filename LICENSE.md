@@ -104,6 +104,8 @@ Copyrights statements for [Open_Bootloader]
 
 	Copyright (c) 2024-2026 STMicroelectronics.
 
+	Copyright (c) 2025-2026 STMicroelectronics.
+
 	Copyright (c) 2026 STMicroelectronics.
 
 <!-- End of Copyrights statements for [Open_Bootloader] -->

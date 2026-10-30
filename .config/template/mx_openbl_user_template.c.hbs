@@ -467,6 +467,19 @@ int32_t openbl_user_init(openbl_obj_t *p_openbl_obj)
   /* Register user flash memory */
   mem_list.memories[FLASH_MEM].hw_context.p_itf_hw_context = (void *)OPENBL_FLASH_ITF;
   mem_list.memories[FLASH_MEM].hw_context.p_data           = (void *)OPENBL_SYS_IWDG;
+  {{#if (@root.EnvVarAPI.getVariableValue 'HAL_NVM_PROJECT_USE_HAL')}}
+  mem_list.memories[FLASH_MEM].mem_desc.start_address      = OPENBL_NVM_START_ADDRESS;
+  mem_list.memories[FLASH_MEM].mem_desc.end_address        = OPENBL_NVM_END_ADDRESS;
+  mem_list.memories[FLASH_MEM].mem_desc.size               = OPENBL_NVM_MEM_SIZE;
+  mem_list.memories[FLASH_MEM].mem_desc.type               = OPENBL_FLASH_AREA;
+  mem_list.memories[FLASH_MEM].mem_ops.Read                = OPENBL_NVM_Read;
+  mem_list.memories[FLASH_MEM].mem_ops.Write               = OPENBL_NVM_Write;
+  mem_list.memories[FLASH_MEM].mem_ops.JumpToAddress       = OPENBL_NVM_JumpToAddress;
+  mem_list.memories[FLASH_MEM].mem_ops.MassErase           = NULL;
+  mem_list.memories[FLASH_MEM].mem_ops.Erase               = NULL;
+  mem_list.memories[FLASH_MEM].mem_ops.SetReadoutProtect   = NULL;
+  mem_list.memories[FLASH_MEM].mem_ops.SetWriteProtect     = OPENBL_NVM_SetWriteProtection;
+  {{else}}
   mem_list.memories[FLASH_MEM].mem_desc.start_address      = OPENBL_FLASH_START_ADDRESS;
   mem_list.memories[FLASH_MEM].mem_desc.end_address        = OPENBL_FLASH_END_ADDRESS;
   mem_list.memories[FLASH_MEM].mem_desc.size               = OPENBL_FLASH_MEM_SIZE;
@@ -478,6 +491,7 @@ int32_t openbl_user_init(openbl_obj_t *p_openbl_obj)
   mem_list.memories[FLASH_MEM].mem_ops.Erase               = OPENBL_FLASH_Erase;
   mem_list.memories[FLASH_MEM].mem_ops.SetReadoutProtect   = NULL;
   mem_list.memories[FLASH_MEM].mem_ops.SetWriteProtect     = OPENBL_FLASH_SetWriteProtection;
+  {{/if}}
 
   /* Increment the number of supported memories */
   mem_list.memories_nbr += 1U;

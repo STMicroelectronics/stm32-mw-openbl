@@ -3,7 +3,7 @@
 
 # Middleware Open Bootloader MCU Component
 
-![tag](https://img.shields.io/badge/tag-7.0.0-brightgreen.svg)
+![tag](https://img.shields.io/badge/tag-7.1.0-brightgreen.svg)
 [![release note](https://img.shields.io/badge/release_note-view_html-gold.svg)](https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-openbl/blob/hal2/Release_Notes.html)
 
 ## Overview
@@ -23,5 +23,4 @@
 ## Description
 
 This **stm32-mw-openbl** MCU component repository is one element **common to all** STM32Cube MCU embedded software packages, providing the **Open Bootloader MCU Middleware** part.
-
 

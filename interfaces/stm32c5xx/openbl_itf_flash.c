@@ -113,6 +113,9 @@ void OPENBL_FLASH_OB_Launch(openbl_mem_t *p_mem)
   hal_flash_handle_t *hflash = (hal_flash_handle_t *)p_mem->hw_context.p_itf_hw_context;
 
   OPENBL_FLASH_OB_StartModification(((FLASH_TypeDef *)((uint32_t)((hflash)->instance))));
+
+  /* Only wait for end operation without checking errors */
+  (void) OPENBL_FLASH_WaitForEndOfOperation(p_mem, OPENBL_FLASH_PROGRAM_TIMEOUT);
 }
 
 /**
@@ -259,16 +262,10 @@ openbl_status_t OPENBL_FLASH_SetWriteProtection(openbl_mem_t *p_mem,
   if (state == OPENBL_ENABLE)
   {
     (void) OPENBL_FLASH_EnableWriteProtection(p_mem, p_pages_list, length);
-
-    /* Register option bytes launch callback */
-    p_mem->mem_ops.PostProcessing = OPENBL_FLASH_OB_Launch;
   }
   else if (state == OPENBL_DISABLE)
   {
     (void) OPENBL_FLASH_DisableWriteProtection(p_mem);
-
-    /* Register option bytes launch callback */
-    p_mem->mem_ops.PostProcessing = OPENBL_FLASH_OB_Launch;
   }
   else
   {

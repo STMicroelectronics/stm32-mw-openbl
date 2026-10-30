@@ -19,8 +19,6 @@
 #include "stm32_hal.h"
 #include "openbl_itf_common.h"
 
-#include "openbl_itf_flash.h"
-
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/

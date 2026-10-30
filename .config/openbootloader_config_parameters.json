@@ -21,7 +21,7 @@
             "version": {
               "title": "Open Bootloader version",
               "type": "string",
-              "default": "7.0.0",
+              "default": "7.1.0",
               "actions": [
                 {
                   "type": "warning",
@@ -806,7 +806,7 @@
                       "actions": [
                         {
                           "type": "exclude",
-                          "condition": "!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'usb')"
+                          "condition": "(!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'usb')) && (!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'usb_otg_hs')) && (!$get('peripheral.isPhysicallyAvailableInCurrentDevice', 'usb_otg_fs'))"
                         }
                       ]
                     },
@@ -1745,8 +1745,8 @@
                     },
                     {
                       "type": "error",
-                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_i2c_instance.selection, 'basic/addressing_mode') == '0'",
-                      "message": "I2C interface use a non-zero address to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/addressing_mode' must be different from '0'."
+                      "condition": "$get('sw-config.peripheral-parameter-value', $interfaces.hw_interface.select_i2c_instance.selection, 'basic/own_address1') == '0'",
+                      "message": "I2C interface use a non-zero address to be compliant with the Open Bootloader. Expected value to fix the error on 'selection::basic/own_address1' must be different from '0'."
                     }
                   ]
                 },
@@ -1952,7 +1952,7 @@
                   ]
                 },
                 "select_flash_instance": {
-                  "title": "Select Flash instance",
+                  "title": "Select Flash or NVM instance",
                   "name": "Flash_Class",
                   "type": "object",
                   "objectType": "bind.peripheral.config",
@@ -2027,7 +2027,7 @@
                     },
                     {
                       "type": "error",
-                      "condition": "$get('sw-config.peripheral-parameter-value', $get('sw-config.middleware-parameter-value', 'USBX', 'interfaces/resources_allocation/select_the_device_instance/selection'), 'basic/pma_settings/1/direction') != 'OUT'",
+                      "condition": "($get('peripheral.isPhysicallyAvailableInCurrentDevice', 'usb')) && ($get('sw-config.peripheral-parameter-value', $get('sw-config.middleware-parameter-value', 'USBX', 'interfaces/resources_allocation/select_the_device_instance/selection'), 'basic/pma_settings/1/direction') != 'OUT')",
                       "message": "Please add item to packet memory area endpoint. To fix error 'usb_hardware::basic/pma_settings/1/direction' must be enabled and configured as output."
                     }
                   ]
